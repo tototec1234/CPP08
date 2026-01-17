@@ -3,42 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   easyfind.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: torinoue <torinoue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 21:35:11 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/17 22:05:42 by torinoue         ###   ########.fr       */
+/*   Updated: 2026/01/17 23:49:37 by toruinoue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EASYFIND_HPP
 # define EASYFIND_HPP
 
-template <typename T>
+#include <algorithm>
+#include <sstream>
+#include <stdexcept>
 
-
-template <class T>
-class C1 : typename T::InnerType // Error - typename not allowed.
-{};
-template <class T>
-class C2 : A<typename T::InnerType>  // typename OK.
-{};
-
-
-// void easyfind(T &first, int arg){
-// 	T tmp = first;
-// 	first = second;
-// 	second = tmp;
-// }
+class NoOccurrenceFoundException : public std::exception
+{
+public:
+	virtual const char* what() const throw()
+	{
+		return "Value not found in container";
+	}
+};
 
 template <typename T>
-const T& min(const T &first, const T &second){
-	return first < second ? first : second;
+
+
+typename T::iterator easyfind(T &container, int value){
+	typename T::iterator found = std::find(container.begin(), container.end(), value);
+		if (found == container.end())
+			throw NoOccurrenceFoundException();
+	return found;
 }
 
-template <typename T>
-const T& max(const T &first, const T &second){
-	return second < first ? first : second;
-}
 
 #endif
 
