@@ -21,7 +21,7 @@ int test_subject()
 int test_Mine()
 {
     std::cout << std::endl;
-    std::cout << "3. Testing multipleAdd Function:" << std::endl;
+    std::cout << "3. Testing addRange Function:" << std::endl;
     try {
         std::vector<int> sourceNumbers;
         sourceNumbers.push_back(1);
@@ -38,16 +38,16 @@ int test_Mine()
         }
         std::cout << std::endl;
         
-        // multipleAddを使用して一括追加!!!!!!!!!!!!!!!!!!!
-        bulkSpan.multipleAdd(sourceNumbers.begin(), sourceNumbers.end());
+        // addRangeを使用して一括追加!!!!!!!!!!!!!!!!!!!
+        bulkSpan.addRange(sourceNumbers.begin(), sourceNumbers.end());
         
-        std::cout << "After multipleAdd: ";
-        bulkSpan.printVector();
+        // std::cout << "After addRange: ";
+        bulkSpan.printContents();  // デバッグ用（レビュー時に必要に応じてコメントを外す）
         
         std::cout << "Shortest span: " << bulkSpan.shortestSpan() << std::endl;
         std::cout << "Longest span: " << bulkSpan.longestSpan() << std::endl;
     } catch (const std::exception& e) {
-        std::cout << "ERROR :in multipleAdd test: " << e.what() << std::endl;
+        std::cout << "ERROR :in addRange test: " << e.what() << std::endl;
     }
 
     std::cout << std::endl;
@@ -62,7 +62,7 @@ int test_Mine()
 	}
 	try
 	{
-		largeSpan.multipleAdd(largeVec.begin(), largeVec.end());
+		largeSpan.addRange(largeVec.begin(), largeVec.end());
 		std::cout << "shortest span: " << largeSpan.shortestSpan() << std::endl;
 		std::cout << "longest span: " << largeSpan.longestSpan() << std::endl;
 	}
@@ -86,7 +86,7 @@ int test_Mine()
         std::cout << "Expected overflow exception caught: " << e.what() << std::endl;
     }
     
-    // multipleAddの容量オーバーフローテスト
+    // addRangeの容量オーバーフローテスト
     try {
         std::vector<int> tooManyNumbers;
         for (int i = 0; i < 5; ++i) {
@@ -94,11 +94,11 @@ int test_Mine()
         }
         
         Span tinySpan(3);
-        tinySpan.multipleAdd(tooManyNumbers.begin(), tooManyNumbers.end());
-        std::cout << "multipleAdd should have thrown exception!" << std::endl;
+        tinySpan.addRange(tooManyNumbers.begin(), tooManyNumbers.end());
+        std::cout << "addRange should have thrown exception!" << std::endl;
         
     } catch (const std::out_of_range& e) {
-        std::cout << "Expected multipleAdd overflow exception: " << e.what() << std::endl;
+        std::cout << "Expected addRange overflow exception: " << e.what() << std::endl;
     }
 
     std::cout << std::endl;

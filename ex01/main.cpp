@@ -6,76 +6,144 @@
 /*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 22:00:00 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/17 23:38:07 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/18 11:51:43 by toruinoue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-// https://atcoder.jp/contests/apg4b/tasks/APG4b_aa?lang=ja%EF%BC%89%E3%81%AF%E3%80%81STL%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%81%AE%E5%85%A5%E9%96%80%E3%81%A8%E3%81%97%E3%81%A6%E6%9C%80%E9%81%A9%E3%81%AA%E3%82%B5%E3%82%A4%E3%83%88%E3%81%A7%E3%81%99%E3%80%82%E3%80%8Cstack%E3%81%AF%E3%80%8E%E6%96%B0%E3%81%97%E3%81%8F%E8%BF%BD%E5%8A%A0%E3%81%97%E3%81%9F%E3%82%82%E3%81%AE%E3%81%BB%E3%81%A9%E5%85%88%E3%81%AB%E5%8F%96%E3%82%8A%E5%87%BA%E3%81%95%E3%82%8C%E3%82%8B%E3%80%8F%E3%82%88%E3%81%86%E3%81%AA%E5%87%A6%E7%90%86%E3%82%92%E8%A1%8C%E3%81%86%E3%83%87%E3%83%BC%E3%82%BF%E6%A7%8B%E9%80%A0%E3%80%8D
+//listは双方向リストであることから、任意の位置での挿入と削除に優れている、
+//でも今回はその機能使わないっぴ！
+//というわけでvector使用。
 /* ************************************************************************** */
-//std::vector と std::list はどちらも シーケンスコンテナ
+int test_subject()
+{
+	Span sp = Span(5);
+	sp.addNumber(6);
+	sp.addNumber(3);
+	sp.addNumber(17);
+	sp.addNumber(9);
+	sp.addNumber(11);
+	std::cout << sp.shortestSpan() << std::endl;
+	std::cout << sp.longestSpan() << std::endl;
+	return(0);
+}
 
-#include <iostream>
-#include <vector>
-#include <list>
-#include <iterator>
-#include "easyfind.hpp"
+/* ************************************************************************** */
+int test_Mine()
+{
+    std::cout << std::endl;
+    std::cout << "3. Testing multipleAdd Function:" << std::endl;
+    try {
+        std::vector<int> sourceNumbers;
+        sourceNumbers.push_back(1);
+        sourceNumbers.push_back(5);
+        sourceNumbers.push_back(3);
+        sourceNumbers.push_back(9);
+        sourceNumbers.push_back(2);
+        
+        Span bulkSpan(10);
+        
+        std::cout << "Source vector contains: ";
+        for (size_t i = 0; i < sourceNumbers.size(); ++i) {
+            std::cout << sourceNumbers[i] << " ";
+        }
+        std::cout << std::endl;
+        
+        // multipleAddを使用して一括追加!!!!!!!!!!!!!!!!!!!
+        bulkSpan.multipleAdd(sourceNumbers.begin(), sourceNumbers.end());
+        
+        std::cout << "After multipleAdd: ";
+        bulkSpan.printVector();
+        
+        std::cout << "Shortest span: " << bulkSpan.shortestSpan() << std::endl;
+        std::cout << "Longest span: " << bulkSpan.longestSpan() << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "ERROR :in multipleAdd test: " << e.what() << std::endl;
+    }
 
+    std::cout << std::endl;
+    std::cout<< "Test vector large range" << std::endl;
+	Span largeSpan = Span(999999);
+	std::vector<int> largeVec;
+	std::srand(time(NULL));
+	for (unsigned int i = 0; i < 999999; i++)
+	{
+		int random_int = rand() % 100000000;
+		largeVec.push_back(random_int);
+	}
+	try
+	{
+		largeSpan.multipleAdd(largeVec.begin(), largeVec.end());
+		std::cout << "shortest span: " << largeSpan.shortestSpan() << std::endl;
+		std::cout << "longest span: " << largeSpan.longestSpan() << std::endl;
+	}
+    catch (std::exception &e)
+	{
+		std::cout << "ERROR :in LargeVector test: " << e.what() << std::endl;
+	}
+    
+    std::cout << std::endl;
+    std::cout << "4. Testing Capacity Overflow Exception:" << std::endl;
+    try {
+        Span smallSpan(2);  // 容量2のSpanを作成
+        smallSpan.addNumber(1);
+        smallSpan.addNumber(2);
+        
+        // 3つ目の要素を追加しようとする（例外が発生するはず）
+        smallSpan.addNumber(3);
+        std::cout << "Exception should have been thrown!" << std::endl;
+        
+    } catch (const std::out_of_range& e) {
+        std::cout << "Expected overflow exception caught: " << e.what() << std::endl;
+    }
+    
+    // multipleAddの容量オーバーフローテスト
+    try {
+        std::vector<int> tooManyNumbers;
+        for (int i = 0; i < 5; ++i) {
+            tooManyNumbers.push_back(i * 10);
+        }
+        
+        Span tinySpan(3);
+        tinySpan.multipleAdd(tooManyNumbers.begin(), tooManyNumbers.end());
+        std::cout << "multipleAdd should have thrown exception!" << std::endl;
+        
+    } catch (const std::out_of_range& e) {
+        std::cout << "Expected multipleAdd overflow exception: " << e.what() << std::endl;
+    }
+
+    std::cout << std::endl;
+    std::cout << "5. Testing Insufficient Elements Exception:" << std::endl;
+    try {
+        Span emptySpan(5);
+        emptySpan.shortestSpan(); // 例外が発生するはず
+        std::cout << " Empty span should throw exception!" << std::endl;
+    } catch (const std::out_of_range& e) {
+        std::cout << "Empty span exception (shortest): " << e.what() << std::endl;
+    }
+    try {
+        Span emptySpan(5);
+        emptySpan.longestSpan(); // 例外が発生するはず
+        std::cout << " Empty span should throw exception!" << std::endl;
+    } catch (const std::out_of_range& e) {
+        std::cout << "Empty span exception (longest): " << e.what() << std::endl;
+    }
+    try {
+        Span singleSpan(5);
+        singleSpan.addNumber(42);
+        singleSpan.shortestSpan(); // 例外が発生するはず
+        std::cout << "Single element span should throw exception!" << std::endl;
+    } catch (const std::out_of_range& e) {
+        std::cout << "Single element span exception: " << e.what() << std::endl;
+    }
+    return 0;
+}
+
+/* ************************************************************************** */
 int main()
 {
-	std::cout << "=== Testing with std::vector ===" << std::endl;
-	std::vector<int> vec;
-	vec.push_back(1);
-	vec.push_back(2);
-	vec.push_back(3);
-	vec.push_back(4);
-	vec.push_back(5);
-
-	// 成功ケースでインデックスを取得
-	try {
-		std::vector<int>::iterator result_it = easyfind(vec, 3);
-		
-		// イテレータからインデックスを計算
-		long index = std::distance(vec.begin(), result_it);
-		
-		std::cout << "Found: " << *result_it << " at index: " << index << std::endl;
-	} catch (const NoOccurrenceFoundException& e) {
-		std::cout << "Error: " << e.what() << std::endl;
-	}
-
-	try {
-		std::vector<int>::iterator result_it = easyfind(vec, 42);
-		
-		// イテレータからインデックスを計算
-		long index = std::distance(vec.begin(), result_it);
-		
-		std::cout << "Found: " << *result_it << " at index: " << index << std::endl;
-	} catch (const NoOccurrenceFoundException& e) {
-		std::cout << "Error: " << e.what() << std::endl;
-	}
-	// std::list でのテスト
-	std::cout << "\n=== Testing with std::list ===" << std::endl;
-	std::list<int> lst;
-	lst.push_back(10);
-	lst.push_back(20);
-	lst.push_back(30);
-
-	// 成功
-	try {
-		std::list<int>::iterator result = easyfind(lst, 20);
-		long index = std::distance(lst.begin(), result);
-		std::cout << "Found: " << *result << " at index: " << index << std::endl;
-	} catch (const NoOccurrenceFoundException& e) {
-		std::cout << "Error: " << e.what() << std::endl;
-	}
-
-	// 失敗
-	try {
-		std::list<int>::iterator result = easyfind(lst, 42);
-		std::cout << "Found: " << *result << std::endl;
-	} catch (const NoOccurrenceFoundException& e) {
-		std::cout << "Error: " << e.what() << std::endl;
-	}
-
-	return 0;
+	std::cout << "Subject tests\n";
+	test_subject();
+	std::cout << "\nMy tests\n";
+	test_Mine();
 }

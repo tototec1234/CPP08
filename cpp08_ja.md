@@ -114,6 +114,48 @@ addNumber()を何千回も呼び出すのは非常に煩わしいです。
 1回の呼び出しでSpanに複数の数値を追加するメンバ関数を実装してください。
 ```
 
+**テスト例:**
+```
+Running this code:
+int main() {
+  Span sp = Span(5);
+  sp.addNumber(6);
+  sp.addNumber(3);
+  sp.addNumber(17);
+  sp.addNumber(9);
+  sp.addNumber(11);
+  std::cout << sp.shortestSpan() << std::endl;
+  std::cout << sp.longestSpan() << std::endl;
+return 0; }
+Should output:
+$> ./ex01
+2
+14
+$>
+```
+
+**補足:**
+
+**原文:**
+```
+Last but not least, it would be wonderful to fill your Span using a range of iterators. 
+Making thousands of calls to addNumber() is so annoying. Implement a member function 
+to add multiple numbers to your Span in a single call.
+
+If you don't have a clue, study the Containers. Some member functions take a range 
+of iterators in order to add a sequence of elements to the container.
+```
+
+**和訳:**
+```
+最後に、イテレータの範囲を使用してSpanを埋めることができると素晴らしいでしょう。
+addNumber()を何千回も呼び出すのは非常に煩わしいです。
+1回の呼び出しでSpanに複数の数値を追加するメンバ関数を実装してください。
+
+手がかりがない場合は、コンテナを研究してください。
+一部のメンバ関数は、コンテナに要素のシーケンスを追加するために、イテレータの範囲を受け取ります。
+```
+
 ---
 
 ## 演習 02: Mutated abomination
