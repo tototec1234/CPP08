@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   main_debug.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 22:00:00 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/19 04:24:21 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/19 05:51:09 by toruinoue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,19 @@
 #include <ctime>
 #include <limits>
 #include <string>
-#include <sstream>
 
 //listは双方向リストであることから、任意の位置での挿入と削除に優れている、
 //でも今回はその機能使わないっぴ！
 //というわけでvector使用。
 
 void printOutput(bool useError, const char* color, const std::string& message, bool newline = true);
+void printVectorContents(const std::vector<int>& vec, const std::string& label);
 void test_subject();
 void test_addRange();
 void test_largeRange();
 void test_capacityOverflow();
 void test_insufficientElements();
-
+/* ************************************************************************** */	
 int main() {
 	// Seed random number generator
 	std::srand(std::time(NULL));
@@ -90,7 +90,7 @@ int main() {
 
 	return 0;
 }
-
+/* ************************************************************************** */	
 void test_subject() {
 	printOutput(false, GREEN_COLOR, "\n=== Testing Subject Example ===");
 	printOutput(false, nullptr, "=== 課題書のテスト例 ===");
@@ -103,24 +103,25 @@ void test_subject() {
 		sp.addNumber(9);
 		sp.addNumber(11);
 
-		std::ostringstream oss1;
-		oss1 << "shortestSpan(): " << sp.shortestSpan();
-		printOutput(false, nullptr, oss1.str());
+		printOutput(false, nullptr, "Span contents:");
+		sp.printContents();
 
-		std::ostringstream oss2;
-		oss2 << "longestSpan(): " << sp.longestSpan();
-		printOutput(false, nullptr, oss2.str());
+		std::cout << "shortestSpan(): " << sp.shortestSpan() << std::endl;
+
+		std::cout << "longestSpan(): " << sp.longestSpan() << std::endl;
 
 		printOutput(false, nullptr, "\n✅ Passed: Subject test / 課題書テスト成功");
 	} catch (const std::exception &e) {
-		printOutput(false, nullptr, std::string("❌ Failed: ") + e.what());
+		std::cout << "❌ Failed: " << e.what() << std::endl;
 	}
 }
-
+/* ************************************************************************** */	
 void test_addRange() {
 	printOutput(false, GREEN_COLOR, "\n=== Testing addRange Function ===");
 	printOutput(false, nullptr, "=== addRange関数テスト ===");
 
+	// 1. 基本的な使用例：空のSpanに一括追加
+	printOutput(false, nullptr, "\n----- Test 1: Basic addRange (empty Span) / 基本使用例（空のSpan） -----");
 	try {
 		std::vector<int> sourceNumbers;
 		sourceNumbers.push_back(1);
@@ -130,33 +131,229 @@ void test_addRange() {
 		sourceNumbers.push_back(2);
 
 		Span bulkSpan(10);
+		printOutput(false, GREEN_COLOR, "Calling: Span bulkSpan(10)");
+		bulkSpan.printContents();
+		std::cout << std::endl;
 
-		std::ostringstream oss;
-		oss << "Source vector contains: ";
-		for (std::vector<int>::size_type i = 0; i < sourceNumbers.size(); ++i) {
-			oss << sourceNumbers[i];
-			if (i < sourceNumbers.size() - 1)
-				oss << " ";
-		}
-		printOutput(false, nullptr, oss.str());
+		printVectorContents(sourceNumbers, "Source vector contains");
 
 		// addRangeを使用して一括追加!!!!!!!!!!!!!!!!!!!
+		printOutput(false, GREEN_COLOR, "Calling: bulkSpan.addRange(sourceNumbers.begin(), sourceNumbers.end())");
 		bulkSpan.addRange(sourceNumbers.begin(), sourceNumbers.end());
 
-		std::ostringstream oss1;
-		oss1 << "Shortest span: " << bulkSpan.shortestSpan();
-		printOutput(false, nullptr, oss1.str());
-
-		std::ostringstream oss2;
-		oss2 << "Longest span: " << bulkSpan.longestSpan();
-		printOutput(false, nullptr, oss2.str());
-
-		printOutput(false, nullptr, "\n✅ Passed: addRange test / addRangeテスト成功");
+		printOutput(false, nullptr, "Span contents after addRange:");
+		bulkSpan.printContents();
 	} catch (const std::exception& e) {
-		printOutput(false, nullptr, std::string("❌ Failed: ") + e.what());
+		std::cout << "❌ Failed: " << e.what() << std::endl;
 	}
-}
 
+	// 2. 実用的なケース：部分的に満たされたSpanへの追加
+	printOutput(false, nullptr, "\n----- Test 2: addRange to partially filled Span / 部分的に満たされたSpanへの追加 -----");
+	try {
+		Span span(10);
+		span.addNumber(100);
+		span.addNumber(200);
+		span.printContents();
+
+		std::vector<int> additionalNumbers;
+		additionalNumbers.push_back(50);
+		additionalNumbers.push_back(150);
+		additionalNumbers.push_back(250);
+
+		printVectorContents(additionalNumbers, "Additional vector contains");
+
+		printOutput(false, GREEN_COLOR, "Calling: span.addRange(additionalNumbers.begin(), additionalNumbers.end())");
+		span.addRange(additionalNumbers.begin(), additionalNumbers.end());
+
+		span.printContents();
+	} catch (const std::exception& e) {
+		std::cout << "❌ Failed: " << e.what() << std::endl;
+	}
+
+	// 3. 複数回のaddRange呼び出し
+	printOutput(false, nullptr, "\n----- Test 3: Multiple addRange calls / 複数回のaddRange呼び出し -----");
+	try {
+		Span span(15);
+		printOutput(false, GREEN_COLOR, "Calling: Span span(15)");
+		span.printContents();
+
+		std::vector<int> batch1;
+		batch1.push_back(10);
+		batch1.push_back(20);
+		batch1.push_back(30);
+
+		std::vector<int> batch2;
+		batch2.push_back(40);
+		batch2.push_back(50);
+
+		std::vector<int> batch3;
+		batch3.push_back(60);
+		batch3.push_back(70);
+		batch3.push_back(80);
+
+		printVectorContents(batch1, "Batch1 vector contains");
+		printOutput(false, GREEN_COLOR, "Calling: span.addRange(batch1.begin(), batch1.end())");
+		span.addRange(batch1.begin(), batch1.end());
+		span.printContents();
+
+		printVectorContents(batch2, "Batch2 vector contains");
+		printOutput(false, GREEN_COLOR, "Calling: span.addRange(batch2.begin(), batch2.end())");
+		span.addRange(batch2.begin(), batch2.end());
+		span.printContents();
+
+		printVectorContents(batch3, "Batch3 vector contains");
+		printOutput(false, GREEN_COLOR, "Calling: span.addRange(batch3.begin(), batch3.end())");
+		span.addRange(batch3.begin(), batch3.end());
+		span.printContents();
+	} catch (const std::exception& e) {
+		std::cout << "❌ Failed: " << e.what() << std::endl;
+	}
+
+	// 4. 境界値テスト：ちょうど容量に達する場合
+	printOutput(false, nullptr, "\n----- Test 4: Boundary test (exact capacity) / 境界値テスト（ちょうど容量） -----");
+	try {
+		Span span(5);
+		printOutput(false, GREEN_COLOR, "Calling: Span span(5)");
+		span.printContents();
+
+		std::vector<int> exactFit;
+		exactFit.push_back(1);
+		exactFit.push_back(2);
+		exactFit.push_back(3);
+		exactFit.push_back(4);
+		exactFit.push_back(5);
+
+		printVectorContents(exactFit, "Exact fit vector contains");
+		printOutput(false, GREEN_COLOR, "Calling: span.addRange(exactFit.begin(), exactFit.end())");
+		span.addRange(exactFit.begin(), exactFit.end());
+
+		span.printContents();
+	} catch (const std::exception& e) {
+		std::cout << "❌ Failed: " << e.what() << std::endl;
+	}
+
+	// 5. 部分的に満たされたSpanへのオーバーフローテスト
+	printOutput(false, nullptr, "\n----- Test 5: Overflow with partially filled Span / 部分的に満たされたSpanへのオーバーフロー -----");
+	try {
+		Span span(5);
+		span.addNumber(10);
+		span.addNumber(20);
+		span.printContents();
+
+		std::vector<int> tooMany;
+		tooMany.push_back(30);
+		tooMany.push_back(40);
+		tooMany.push_back(50);
+		tooMany.push_back(60);  // これで合計6要素になる（容量5を超える）
+
+		printVectorContents(tooMany, "Too many vector contains");
+		printOutput(false, GREEN_COLOR, "Calling: span.addRange(tooMany.begin(), tooMany.end()) - Expected to throw exception");
+		span.addRange(tooMany.begin(), tooMany.end());
+		std::cout << "❌ Failed: Exception should have been thrown!" << std::endl;
+	} catch (const std::out_of_range& e) {
+		std::cout << "✅ Passed: Expected overflow exception: " << e.what() << std::endl;
+	}
+
+	// 6. 空の範囲の追加（begin == end）
+	printOutput(false, nullptr, "\n----- Test 6: Empty range (begin == end) / 空の範囲（begin == end） -----");
+	try {
+		Span span(10);
+		span.addNumber(100);
+		span.printContents();
+
+		std::vector<int> emptyVec;
+		std::cout << "Empty vector contains: (empty)" << std::endl;
+		printOutput(false, GREEN_COLOR, "Calling: span.addRange(emptyVec.begin(), emptyVec.end()) - Empty range");
+		span.addRange(emptyVec.begin(), emptyVec.end());  // 空の範囲
+
+		span.printContents();
+
+		std::cout << "✅ Passed: Empty range addition succeeded (should have no effect)" << std::endl;
+	} catch (const std::exception& e) {
+		std::cout << "❌ Failed: " << e.what() << std::endl;
+	}
+
+	// 7. 部分範囲の追加（配列の一部のみを追加）
+	printOutput(false, nullptr, "\n----- Test 7: Partial range addition / 部分範囲の追加 -----");
+	try {
+		Span span(10);
+		printOutput(false, GREEN_COLOR, "Calling: Span span(10)");
+		span.printContents();
+
+		std::vector<int> fullArray;
+		fullArray.push_back(1);
+		fullArray.push_back(2);
+		fullArray.push_back(3);
+		fullArray.push_back(4);
+		fullArray.push_back(5);
+		fullArray.push_back(6);
+		fullArray.push_back(7);
+		fullArray.push_back(8);
+
+		printVectorContents(fullArray, "Full array contains");
+
+		// 配列の一部（インデックス1から4まで、つまり{2,3,4}）のみを追加
+		std::vector<int>::iterator start = fullArray.begin() + 1;  // インデックス1から
+		std::vector<int>::iterator end = fullArray.begin() + 4;    // インデックス4まで（4は含まない）
+
+		std::cout << "Partial range to add: ";
+		for (std::vector<int>::iterator it = start; it != end; ++it) {
+			std::cout << *it;
+			if (it + 1 != end)
+				std::cout << " ";
+		}
+		std::cout << " (indices 1-3 of full array)" << std::endl;
+
+		printOutput(false, GREEN_COLOR, "Calling: span.addRange(fullArray.begin() + 1, fullArray.begin() + 4)");
+		span.addRange(start, end);
+
+		span.printContents();
+
+		// さらに別の部分範囲（インデックス4から8まで、つまり{5,6,7,8}）を追加
+		std::vector<int>::iterator start2 = fullArray.begin() + 4;  // インデックス4から
+		std::vector<int>::iterator end2 = fullArray.begin() + 8;    // インデックス8まで（8は含まない）
+
+		std::cout << "Partial range to add: ";
+		for (std::vector<int>::iterator it = start2; it != end2; ++it) {
+			std::cout << *it;
+			if (it + 1 != end2)
+				std::cout << " ";
+		}
+		std::cout << " (indices 4-7 of full array)" << std::endl;
+
+		printOutput(false, GREEN_COLOR, "Calling: span.addRange(fullArray.begin() + 4, fullArray.begin() + 8)");
+		span.addRange(start2, end2);
+
+		span.printContents();
+
+		// さらにfullArrayに9と10を追加
+		fullArray.push_back(9);
+		fullArray.push_back(10);
+		printVectorContents(fullArray, "Full array after adding 9 and 10 contains");
+
+		// 全部を追加しようとする（現在7個入っているので、7+10=17個になり容量10を超える）
+		std::cout << "Attempting to add all elements: ";
+		for (std::vector<int>::size_type i = 0; i < fullArray.size(); ++i) {
+			std::cout << fullArray[i];
+			if (i < fullArray.size() - 1)
+				std::cout << " ";
+		}
+		std::cout << " (all elements of full array, would cause overflow)" << std::endl;
+
+		printOutput(false, GREEN_COLOR, "Calling: span.addRange(fullArray.begin(), fullArray.end()) - Expected to throw exception");
+		try {
+			span.addRange(fullArray.begin(), fullArray.end());
+			std::cout << "❌ Failed: Exception should have been thrown!" << std::endl;
+		} catch (const std::out_of_range& e) {
+			std::cout << "✅ Passed: Expected overflow exception: " << e.what() << std::endl;
+		}
+	} catch (const std::exception& e) {
+		std::cout << "❌ Failed: " << e.what() << std::endl;
+	}
+
+	printOutput(false, nullptr, "\n✅ Passed: addRange test / addRangeテスト成功");
+}
+/* ************************************************************************** */	
 void test_largeRange() {
 	printOutput(false, GREEN_COLOR, "\n=== Testing Large Range ===");
 	printOutput(false, nullptr, "=== 大量データテスト ===");
@@ -170,22 +367,19 @@ void test_largeRange() {
 			largeVec.push_back(random_int);
 		}
 
+		printOutput(false, GREEN_COLOR, "Calling: largeSpan.addRange(largeVec.begin(), largeVec.end()) - Adding 999999 elements");
 		largeSpan.addRange(largeVec.begin(), largeVec.end());
 
-		std::ostringstream oss1;
-		oss1 << "shortest span: " << largeSpan.shortestSpan();
-		printOutput(false, nullptr, oss1.str());
+		std::cout << "shortest span: " << largeSpan.shortestSpan() << std::endl;
 
-		std::ostringstream oss2;
-		oss2 << "longest span: " << largeSpan.longestSpan();
-		printOutput(false, nullptr, oss2.str());
+		std::cout << "longest span: " << largeSpan.longestSpan() << std::endl;
 
 		printOutput(false, nullptr, "\n✅ Passed: Large range test / 大量データテスト成功");
 	} catch (const std::exception &e) {
 		printOutput(false, nullptr, std::string("❌ Failed: ") + e.what());
 	}
 }
-
+/* ************************************************************************** */	
 void test_capacityOverflow() {
 	printOutput(false, GREEN_COLOR, "\n=== Testing Capacity Overflow Exception ===");
 	printOutput(false, nullptr, "=== 容量オーバーフローテスト ===");
@@ -201,9 +395,7 @@ void test_capacityOverflow() {
 		smallSpan.addNumber(3);
 		printOutput(false, nullptr, "❌ Failed: Exception should have been thrown!");
 	} catch (const std::out_of_range& e) {
-		std::ostringstream oss;
-		oss << "✅ Passed: Expected overflow exception caught: " << e.what();
-		printOutput(false, nullptr, oss.str());
+		std::cout << "✅ Passed: Expected overflow exception caught: " << e.what() << std::endl;
 	}
 
 	// addRangeの容量オーバーフローテスト
@@ -215,17 +407,16 @@ void test_capacityOverflow() {
 		}
 
 		Span tinySpan(3);
+		printOutput(false, GREEN_COLOR, "Calling: tinySpan.addRange(tooManyNumbers.begin(), tooManyNumbers.end()) - Expected to throw exception");
 		tinySpan.addRange(tooManyNumbers.begin(), tooManyNumbers.end());
 		printOutput(false, nullptr, "❌ Failed: addRange should have thrown exception!");
 	} catch (const std::out_of_range& e) {
-		std::ostringstream oss;
-		oss << "✅ Passed: Expected addRange overflow exception: " << e.what();
-		printOutput(false, nullptr, oss.str());
+		std::cout << "✅ Passed: Expected addRange overflow exception: " << e.what() << std::endl;
 	}
 
 	printOutput(false, nullptr, "\n✅ Capacity overflow test completed / 容量オーバーフローテスト完了");
 }
-
+/* ************************************************************************** */	
 void test_insufficientElements() {
 	printOutput(false, GREEN_COLOR, "\n=== Testing Insufficient Elements Exception ===");
 	printOutput(false, nullptr, "=== 要素不足例外テスト ===");
@@ -237,9 +428,7 @@ void test_insufficientElements() {
 		emptySpan.shortestSpan(); // 例外が発生するはず
 		printOutput(false, nullptr, "❌ Failed: Empty span should throw exception!");
 	} catch (const std::out_of_range& e) {
-		std::ostringstream oss;
-		oss << "✅ Passed: Empty span exception (shortest): " << e.what();
-		printOutput(false, nullptr, oss.str());
+		std::cout << "✅ Passed: Empty span exception (shortest): " << e.what() << std::endl;
 	}
 
 	// empty span の longestSpan テスト
@@ -249,9 +438,7 @@ void test_insufficientElements() {
 		emptySpan.longestSpan(); // 例外が発生するはず
 		printOutput(false, nullptr, "❌ Failed: Empty span should throw exception!");
 	} catch (const std::out_of_range& e) {
-		std::ostringstream oss;
-		oss << "✅ Passed: Empty span exception (longest): " << e.what();
-		printOutput(false, nullptr, oss.str());
+		std::cout << "✅ Passed: Empty span exception (longest): " << e.what() << std::endl;
 	}
 
 	// single element span のテスト
@@ -262,14 +449,22 @@ void test_insufficientElements() {
 		singleSpan.shortestSpan(); // 例外が発生するはず
 		printOutput(false, nullptr, "❌ Failed: Single element span should throw exception!");
 	} catch (const std::out_of_range& e) {
-		std::ostringstream oss;
-		oss << "✅ Passed: Single element span exception: " << e.what();
-		printOutput(false, nullptr, oss.str());
+		std::cout << "✅ Passed: Single element span exception: " << e.what() << std::endl;
 	}
 
 	printOutput(false, nullptr, "\n✅ Insufficient elements test completed / 要素不足テスト完了");
 }
-
+/* ************************************************************************** */	
+void printVectorContents(const std::vector<int>& vec, const std::string& label) {
+	std::cout << label << ": ";
+	for (std::vector<int>::size_type i = 0; i < vec.size(); ++i) {
+		std::cout << vec[i];
+		if (i < vec.size() - 1)
+			std::cout << " ";
+	}
+	std::cout << std::endl;
+}
+/* ************************************************************************** */	
 void printOutput(bool useError, const char* color, const std::string& message, bool newline) {
 	std::ostream& stream = useError ? std::cerr : std::cout;
 	if (color != nullptr) {

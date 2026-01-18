@@ -2,7 +2,7 @@ NAME =  Span
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic  -Wsign-compare  -MMD -MP
 
-SRCS_FILES = main_debug.cpp \
+SRCS_FILES = main.cpp \
 		Span.cpp
 
 SRCS_DIR = srcs

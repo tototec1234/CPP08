@@ -6,7 +6,7 @@
 /*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:48:18 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/19 04:31:34 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/19 06:03:02 by toruinoue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ class Span
 		int longestSpan() const;
 		void addRange(	std::vector<int>::iterator begin,
 						std::vector<int>::iterator end);
-		// デバッグ用（レビュー時に必要に応じてコメントを外す）
+		// デバッグ用：constメソッドで状態を変更しない。他のメソッドからは呼び出されておらず補助関数にはなっていない
 		void printContents() const;
 		
 };
