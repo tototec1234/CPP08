@@ -6,11 +6,12 @@
 /*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:48:18 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/19 04:00:21 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/19 04:43:16 by toruinoue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
+#include "AnsiColor.hpp"
 #include <algorithm>
 #include <iterator>
 #include <stdexcept>
@@ -90,7 +91,22 @@ void Span::addRange(	std::vector<int>::iterator begin,
 		throw std::out_of_range("ERROR : Range filling would outgrow the Span instance");
 	this->_vec.insert(_vec.begin(), begin, end);
 }
-		
+
+/* ************************************************************************** */
+// デバッグ用（レビュー時に必要に応じてコメントを外す）
+void Span::printContents() const
+{
+	if (_vec.empty())
+	{
+		std::cout << RED_COLOR << "empty vector" << RESET_COLOR << std::endl;
+		return;
+	}
+	for (std::vector<int>::size_type i = 0; i < _vec.size(); ++i)
+		std::cout << MAGENTA_COLOR << "[" << _vec.at(i) << "]" << RESET_COLOR << " ";
+	std::cout << std::endl;
+}
+
+/* ************************************************************************** */
 
 /*
 
