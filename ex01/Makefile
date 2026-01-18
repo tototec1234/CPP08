@@ -1,19 +1,25 @@
-NAME = bureaucrat_test
+NAME =  Span
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic -MMD -MP
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic  -Wsign-compare  -MMD -MP
 
-SRCS = main.cpp \
-	Bureaucrat.cpp
+SRCS_FILES = main.cpp \
+		Span.cpp
 
-OBJS = $(SRCS:.cpp=.o)
-DEPS = $(SRCS:.cpp=.d)
+SRCS_DIR = srcs
+OBJS_DIR = objects
+
+SRCS = $(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
+
+OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.cpp=.o))
+DEPS = $(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.cpp=.d))
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 
-%.o: %.cpp
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.cpp
+	@mkdir -p $(OBJS_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 -include $(DEPS)

@@ -6,7 +6,7 @@
 /*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:48:18 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/18 12:13:35 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/19 04:00:54 by toruinoue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ class Span
 	public:
 		Span(unsigned int n);
 		Span(const Span& src);
+		~Span();
 
 		// Overloaded operator
 		Span& operator=(const Span& other);
@@ -34,11 +35,15 @@ class Span
 		// Public Methods
 			/* Getters */
 		void addNumber(int x);
-		int shortstSpan() const;
+		int shortestSpan() const;
 		int longestSpan() const;
-		void multipleA
-}
+		void addRange(	std::vector<int>::iterator begin,
+						std::vector<int>::iterator end);
+		
+};
+
 #endif
+
 
 /*
 
@@ -62,3 +67,4 @@ Next, implement two member functions: shortestSpan() and longestSpan()
 Implement a member function
 to add multiple numbers to your Span in a single call.
 */
+
