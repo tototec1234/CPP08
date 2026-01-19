@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
+/*   By: torinoue <torinoue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 22:00:00 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/19 15:03:27 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/19 21:37:02 by torinoue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,8 @@ void test_list() {
 		printOutput(false, GREEN_COLOR, "Calling: easyfind(lst, 42) - Expected to throw exception");
 		try {
 			std::list<int>::iterator result = easyfind(lst, 42);
-			std::cout << "Found: " << *result << std::endl;
+			long index = std::distance(lst.begin(), result);
+			std::cout << "Found: " << *result << " at index: " << index << std::endl;
 			printOutput(false, NULL, "❌ Failed: Exception should have been thrown! / 例外が発生するはずです！");
 		} catch (const NoOccurrenceFoundException& e) {
 			std::cout << "✅ Passed: Expected exception caught: " << e.what() << std::endl;
@@ -194,7 +195,8 @@ void test_deque() {
 		printOutput(false, GREEN_COLOR, "Calling: easyfind(deq, 42) - Expected to throw exception");
 		try {
 			std::deque<int>::iterator result = easyfind(deq, 42);
-			std::cout << "Found: " << *result << std::endl;
+			long index = std::distance(deq.begin(), result);
+			std::cout << "Found: " << *result << " at index: " << index << std::endl;
 			printOutput(false, NULL, "❌ Failed: Exception should have been thrown! / 例外が発生するはずです！");
 		} catch (const NoOccurrenceFoundException& e) {
 			std::cout << "✅ Passed: Expected exception caught: " << e.what() << std::endl;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
+/*   By: torinoue <torinoue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 22:00:00 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/19 12:39:32 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/19 21:19:53 by torinoue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ int main() {
 	while (running) {
 		printOutput(false, YELLOW_COLOR, "\n\n=== CPP08 Ex01: Span Test Menu ===");
 		printOutput(false, NULL, "=== CPP08 演習01 テストメニュー ===");
-		printOutput(false, NULL, "1: Test Subject (includes subject.pdf example)       課題書のテスト例");
+		printOutput(false, NULL, "1: Test Subject (includes subject.pdf example)      課題書のテスト例");
 		printOutput(false, NULL, "2: Test addRange Function                           addRange関数テスト");
 		printOutput(false, NULL, "3: Test Large Range (999999 elements)               大量データテスト");
 		printOutput(false, NULL, "4: Test Capacity Overflow Exception                 容量オーバーフローテスト");
 		printOutput(false, NULL, "5: Test Insufficient Elements Exception             要素不足例外テスト");
-		printOutput(false, NULL, "0: Exit                                              終了");
+		printOutput(false, NULL, "0: Exit                                             終了");
 		std::cout << "Choose an option / 選択してください: ";
 
 		if (!(std::cin >> choice)) {
