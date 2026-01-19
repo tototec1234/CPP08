@@ -6,36 +6,35 @@
 /*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 21:35:11 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/17 23:49:37 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/19 10:43:00 by toruinoue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EASYFIND_HPP
 # define EASYFIND_HPP
 
-#include <algorithm>
-#include <sstream>
-#include <stdexcept>
+# include <algorithm>
+# include <sstream>
+# include <stdexcept>
 
+// classes
 class NoOccurrenceFoundException : public std::exception
 {
-public:
-	virtual const char* what() const throw()
-	{
-		return "Value not found in container";
-	}
+	public:
+		virtual const char* what() const throw()
+		{
+			return "Value not found in container";
+		}
 };
 
+// テンプレート関数
 template <typename T>
-
-
-typename T::iterator easyfind(T &container, int value){
+typename T::iterator easyfind(T &container, int value) {
 	typename T::iterator found = std::find(container.begin(), container.end(), value);
-		if (found == container.end())
-			throw NoOccurrenceFoundException();
+	if (found == container.end())
+		throw NoOccurrenceFoundException();
 	return found;
 }
-
 
 #endif
 
