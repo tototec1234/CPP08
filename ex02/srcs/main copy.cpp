@@ -6,7 +6,7 @@
 /*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 12:00:00 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/19 18:16:13 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/19 17:40:25 by toruinoue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,55 +96,42 @@ void subject_test() {
 	printOutput(false, GREEN_COLOR, "\n=== Testing Subject Example ===");
 	printOutput(false, nullptr, "=== 課題書のテスト例 ===");
 	
-	MutantStack<int> mstack;
-	mstack.push(5);
-	mstack.push(17);
-	std::cout << mstack.top() << std::endl;  // 期待値: 17
-	mstack.pop();
-	std::cout << mstack.size() << std::endl;  // 期待値: 1
-	mstack.push(3);
-	mstack.push(5);
-	mstack.push(737);
-	mstack.push(0);
-			printOutput(false, GREEN_COLOR, "\n----------------");
-	MutantStack<int>::iterator it = mstack.begin();
-	MutantStack<int>::iterator ite = mstack.end();
-	++it;
-	--it;
-	while (it != ite)
-	{
-		std::cout << *it << std::endl;
+	try {
+		MutantStack<int> mstack;
+		mstack.push(5);
+		mstack.push(17);
+		std::cout << mstack.top() << std::endl;  // 期待値: 17
+		mstack.pop();
+		std::cout << mstack.size() << std::endl;  // 期待値: 1
+		mstack.push(3);
+		mstack.push(5);
+		mstack.push(737);
+		mstack.push(0);
+				printOutput(false, GREEN_COLOR, "\n----------------");
+		MutantStack<int>::iterator it = mstack.begin();
+		MutantStack<int>::iterator ite = mstack.end();
 		++it;
-	}
-	std::cout << std::endl;
-	
-	// std::stackへのコピー（課題書の要件）
-	printOutput(false, GREEN_COLOR, "Calling: std::stack<int> s(mstack);");
-	std::stack<int> s(mstack);
-	std::cout << "Copied to std::stack, size: " << s.size() << std::endl;
+		--it;
+		while (it != ite)
+		{
+			std::cout << *it << std::endl;
+			++it;
+		}
 		
+		// std::stackへのコピー（課題書の要件）
+		std::stack<int> s(mstack);
+		std::cout << "Copied to std::stack, size: " << s.size() << std::endl;
+		
+		printOutput(false, nullptr, "\n✅ Passed: Subject test / 課題書テスト成功");
+	} catch (const std::exception &e) {
+		printOutput(false, nullptr, std::string("❌ Failed: ") + e.what());
+	}
 }
 /* ************************************************************************** */	
 // std::listとの比較テスト
 // 課題書の要件：
 // "MutantStackで最初に実行し、次にMutantStackをstd::listなどの他のコンテナに置き換えて
 // 実行すると、2つの出力は同じになるはずです。"
-//
-/* ************************************************************************** */
-// イテレータの種類について
-// 
-// MutantStack: 内部コンテナはデフォルトでstd::deque。
-// イテレータはランダムアクセスイテレータ（Random Access Iterator）で、
-// +=、-=、+、-が使えます。
-//
-// std::list: イテレータは双方向イテレータ（Bidirectional Iterator）で、
-// ++と--のみ。+=、-=は使えません。
-//
-// 注意: 課題書のテストコードでは、+=や-=演算子は使用されていません。
-// 課題書の例では、++it、--it、*it、it != ite のみが使用されており、
-// +=や-=が要件として求められていないことが読み取れます。
-// そのため、比較テストでは両方のコンテナで共通して使用できる操作（++、--）のみを使用します。
-/* ************************************************************************** */
 void comparison_test_with_list() {
 	printOutput(false, GREEN_COLOR, "\n=== Comparison Test: MutantStack vs std::list ===");
 	printOutput(false, nullptr, "=== std::listとの比較テスト ===");
@@ -193,18 +180,6 @@ void comparison_test_with_list() {
 		++it;
 		++it;
 		std::cout << "Step 7 - After ++it (x6): " << *it << std::endl;
-		// += 100と同等の操作を++itで100回繰り返す（ループなし）
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		std::cout << "Step 8 - After ++it (x100): " << *it << std::endl;
 		printContainerContents(mstack);
 	}
 	
@@ -252,18 +227,6 @@ void comparison_test_with_list() {
 		++it;
 		++it;
 		std::cout << "Step 7 - After ++it (x6): " << *it << std::endl;
-		// += 100と同等の操作を++itで100回繰り返す（ループなし）
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it; ++it;
-		std::cout << "Step 8 - After ++it (x100): " << *it << std::endl;
 		printContainerContents(lst);
 	}
 }
@@ -491,17 +454,6 @@ void copy_semantics_test() {
 /* ************************************************************************** */	
 // 拡張機能テスト
 // const_iterator、reverse_iterator、const_reverse_iteratorの動作を確認する
-//
-/* ************************************************************************** */
-// reverse_iteratorのランダムアクセス演算子について
-//
-// MutantStackのreverse_iterator（std::dequeのreverse_iterator）は
-// ランダムアクセスイテレータなので、+=、-=演算子が使用可能です。
-// しかし、課題書のテストコードでは、これらの演算子は使用されていません。
-// 課題書の例では、++it、--it、*it、it != ite のみが使用されており、
-// +=や-=が要件として求められていないことが読み取れます。
-// そのため、このテストでは基本的な操作（++、--）のみを使用します。
-/* ************************************************************************** */
 void extended_features_test() {
 	printOutput(false, GREEN_COLOR, "\n=== Extended Features Test ===");
 	printOutput(false, nullptr, "=== 拡張機能テスト ===");
@@ -614,10 +566,11 @@ void extended_features_test() {
 		--rit;
 		printOutput(false, CYAN_COLOR, "After --: ", false);
 		std::cout << *rit << std::endl;
-		// += 2と同等の操作を++ritで2回繰り返す
-		++rit;
-		++rit;
-		printOutput(false, CYAN_COLOR, "After ++rit (x2): ", false);
+		rit += 2;
+		printOutput(false, CYAN_COLOR, "After += 2: ", false);
+		std::cout << *rit << std::endl;
+		rit -= 4;
+		printOutput(false, CYAN_COLOR, "After -= 4: ", false);
 		std::cout << *rit << std::endl;
 	}
 }
