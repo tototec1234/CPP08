@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_debug.cpp                                     :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 22:00:00 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/19 05:51:09 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/19 12:39:32 by toruinoue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,15 @@
 #include <limits>
 #include <string>
 
-//listは双方向リストであることから、任意の位置での挿入と削除に優れている、
-//でも今回はその機能使わないっぴ！
-//というわけでvector使用。
+//コンテナ選択の理由：
+//listは双方向リストであることから、任意の位置での挿入と削除に優れているが、
+//本実装ではshortestSpan()でstd::sort()を使用する必要がある。
+//std::sort()はランダムアクセスイテレータを要求するが、std::listはランダムアクセスイテレータを提供しない。
+//そのため、std::listを使用する場合はlist::sort()（コンテナ固有メソッド）を使う必要がある。
+//しかし、CPP08課題書（Chapter III Module-specific rules）では、
+//"the Algorithms (defined in header <algorithm>)"の使用が明確に求められており、
+//std::sort()などの<algorithm>ヘッダーのアルゴリズムを使用することが教育目的である。
+//したがって、ランダムアクセスイテレータを提供するstd::vectorを使用する。
 
 void printOutput(bool useError, const char* color, const std::string& message, bool newline = true);
 void printVectorContents(const std::vector<int>& vec, const std::string& label);

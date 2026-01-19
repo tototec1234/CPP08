@@ -6,16 +6,16 @@
 /*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:48:18 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/19 06:05:01 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/19 12:54:33 by toruinoue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
 #include "AnsiColor.hpp"
+#include <iostream>
+#include <stdexcept>
 #include <algorithm>
 #include <iterator>
-#include <stdexcept>
-#include <vector>
 
 Span::Span(unsigned int n) : N(n) {}
 
@@ -42,7 +42,13 @@ int Span::shortestSpan() const{
 		throw std::out_of_range("ERROR : Span has less than 2 values");
 
 	std::vector<int> sorted(_vec);
-	std::sort(sorted.begin(), sorted.end());
+	std::sort(sorted.begin(), sorted.end()); // <algorithm>を使用
+	/* listで実装した場合:
+	 * std::list<int> sorted(_list.begin(), _list.end());
+	 * sorted.sort(); // list::sort()メンバー関数を使用（<algorithm>ではない！）
+	 * 注意: std::sort()はランダムアクセスイテレータが必要なためlistでは使用不可
+	 * そのため<algorithm>を使わない実装になってしまう（課題の趣旨と相違）
+	 */
 
 	int minSpan;
 	try {
@@ -53,7 +59,18 @@ int Span::shortestSpan() const{
 		// 注意: -Wsign-compareでも警告は出ない（size_tもstd::vector<int>::size_typeも符号なし整数型）
 		// std::vector<int>::size_typeを使う利点: 型の意図を明確にする
 		for (std::vector<int>::size_type i = 2; i < sorted.size(); ++i)
-			minSpan = std::min(minSpan, sorted.at(i) - sorted.at(i - 1));
+			minSpan = std::min(minSpan, sorted.at(i) - sorted.at(i - 1)); // <algorithm>を使用
+		/* listで実装した場合:
+		 * listはat()メソッドがないため、イテレータで順次アクセスする必要がある
+		 * std::list<int>::iterator it = sorted.begin();
+		 * int prev = *it;
+		 * ++it;
+		 * minSpan = *it - prev;
+		 * for (++it; it != sorted.end(); ++it) {
+		 *     minSpan = std::min(minSpan, *it - prev); // std::min()は<algorithm>から使える
+		 *     prev = *it;
+		 * }
+		 */
 	} catch (const std::out_of_range& e) {
 		/* 防御的プログラミング: 万が一のバグを検出（既にsizeチェック済みだが念のため）
 		方法1: 再スロー（元の例外をそのまま保持）*/
@@ -73,8 +90,16 @@ int Span::shortestSpan() const{
 int Span::longestSpan() const{
 	if (_vec.size() < 2)
 		throw std::out_of_range("ERROR : Span has less than 2 values");
-	int maxValue = *std::max_element(_vec.begin(), _vec.end());
-	int minValue = *std::min_element(_vec.begin(), _vec.end());
+	int maxValue = *std::max_element(_vec.begin(), _vec.end()); // <algorithm>を使用
+	int minValue = *std::min_element(_vec.begin(), _vec.end()); // <algorithm>を使用
+	/* listで実装した場合も同様に<algorithm>を使用可能:
+	 * std::list<int>::const_iterator maxIt = std::max_element(_list.begin(), _list.end());
+	 * std::list<int>::const_iterator minIt = std::min_element(_list.begin(), _list.end());
+	 * int maxValue = *maxIt;
+	 * int minValue = *minIt;
+	 * 注意: std::max_element()とstd::min_element()は双方向イテレータで動作するため、listでも使用可能
+	 * ただし、両方走査するため2回のループが必要（効率は劣るが実装は可能）
+	 */
 	return maxValue - minValue;
 }
 	/* ************************************************************************** */	
@@ -87,7 +112,12 @@ void Span::addNumber(int x){
 	/* ************************************************************************** */
 void Span::addRange(	std::vector<int>::iterator begin,
 						std::vector<int>::iterator end){
-	if (_vec.size() + std::distance(begin, end) > this->N)
+	if (_vec.size() + std::distance(begin, end) > this->N) // <iterator>を使用
+	/* listで実装した場合も同様に<iterator>を使用可能:
+	 * std::distance(begin, end)  // <iterator>を使用
+	 * 注意: listの場合、非ランダムアクセスイテレータのためstd::distance()の計算量がO(n)
+	 * vectorの場合（ランダムアクセスイテレータ）はO(1)だが、std::distance()は実装によって最適化される
+	 */
 		throw std::out_of_range("ERROR : Range filling would outgrow the Span instance");
 	this->_vec.insert(_vec.begin(), begin, end);
 }

@@ -6,16 +6,13 @@
 /*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:48:18 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/19 06:03:02 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/19 12:54:49 by toruinoue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SPAN_HPP
 # define SPAN_HPP
 
-#include <iostream>
-#include <string>
-#include <exception>
 #include <vector>
 
 // classes
