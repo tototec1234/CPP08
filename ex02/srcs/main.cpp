@@ -34,22 +34,22 @@ int main() {
 
 	while (running) {
 		printOutput(false, YELLOW_COLOR, "\n\n=== CPP08 Ex02: MutantStack Test Menu ===");
-		printOutput(false, nullptr, "=== CPP08 演習02 テストメニュー ===");
-		printOutput(false, nullptr, "1: Test Subject (includes subject.pdf example)    課題書のテスト例");
-		printOutput(false, nullptr, "2: Comparison Test with std::list                 std::listとの比較テスト");
-		printOutput(false, nullptr, "3: Edge Case Test                                 エッジケーステスト");
-		printOutput(false, nullptr, "4: Type Genericity Test                           型汎用性テスト");
-		printOutput(false, nullptr, "5: Copy Semantics Test                            コピーセマンティクステスト");
-		printOutput(false, nullptr, "6: Extended Features Test                         拡張機能テスト");
-		printOutput(false, nullptr, "0: Exit                                           終了");
+		printOutput(false, NULL, "=== CPP08 演習02 テストメニュー ===");
+		printOutput(false, NULL, "1: Test Subject (includes subject.pdf example)    課題書のテスト例");
+		printOutput(false, NULL, "2: Comparison Test with std::list                 std::listとの比較テスト");
+		printOutput(false, NULL, "3: Edge Case Test                                 エッジケーステスト");
+		printOutput(false, NULL, "4: Type Genericity Test                           型汎用性テスト");
+		printOutput(false, NULL, "5: Copy Semantics Test                            コピーセマンティクステスト");
+		printOutput(false, NULL, "6: Extended Features Test                         拡張機能テスト");
+		printOutput(false, NULL, "0: Exit                                           終了");
 		std::cout << "Choose an option / 選択してください: ";
 
 		if (!(std::cin >> choice)) {
 			if (std::cin.eof()) {
-				printOutput(false, nullptr, "\nEOF detected. Exiting... / EOFが検出されました。終了します...");
+				printOutput(false, NULL, "\nEOF detected. Exiting... / EOFが検出されました。終了します...");
 				break;
 			}
-			printOutput(false, nullptr, "⚠️ Invalid input! Please enter a number. / 無効な入力です！数字を入力してください。");
+			printOutput(false, NULL, "⚠️ Invalid input! Please enter a number. / 無効な入力です！数字を入力してください。");
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			continue;
@@ -79,10 +79,10 @@ int main() {
 					running = false;
 					break;
 				default:
-					printOutput(false, nullptr, "Invalid selection. Please try again. / 無効な選択です。もう一度試してください。");
+					printOutput(false, NULL, "Invalid selection. Please try again. / 無効な選択です。もう一度試してください。");
 			}
 		} catch (const std::exception &e) {
-			printOutput(false, nullptr, std::string("⚠️ Exception caught: ") + e.what());
+			printOutput(false, NULL, std::string("⚠️ Exception caught: ") + e.what());
 		}
 	}
 
@@ -94,7 +94,7 @@ int main() {
 // 出力がstd::listと同じになることを確認するために使用する。
 void subject_test() {
 	printOutput(false, GREEN_COLOR, "\n=== Testing Subject Example ===");
-	printOutput(false, nullptr, "=== 課題書のテスト例 ===");
+	printOutput(false, NULL, "=== 課題書のテスト例 ===");
 	
 	MutantStack<int> mstack;
 	mstack.push(5);
@@ -147,10 +147,10 @@ void subject_test() {
 /* ************************************************************************** */
 void comparison_test_with_list() {
 	printOutput(false, GREEN_COLOR, "\n=== Comparison Test: MutantStack vs std::list ===");
-	printOutput(false, nullptr, "=== std::listとの比較テスト ===");
+	printOutput(false, NULL, "=== std::listとの比較テスト ===");
 	
 	// MutantStackでの実行
-	printOutput(false, nullptr, "\n--- MutantStack output ---");
+	printOutput(false, NULL, "\n--- MutantStack output ---");
 	{
 		MutantStack<int> mstack;
 		mstack.push(4200);
@@ -209,7 +209,7 @@ void comparison_test_with_list() {
 	}
 	
 	// std::listでの実行（同等の操作）
-	printOutput(false, nullptr, "\n--- std::list output (should be identical) ---");
+	printOutput(false, NULL, "\n--- std::list output (should be identical) ---");
 	{
 		std::list<int> lst;
 		lst.push_back(4200);    // push() → push_back()
@@ -274,10 +274,10 @@ void comparison_test_with_list() {
 // - 大量の要素
 void edge_case_test() {
 	printOutput(false, GREEN_COLOR, "\n=== Edge Case Test ===");
-	printOutput(false, nullptr, "=== エッジケーステスト ===");
+	printOutput(false, NULL, "=== エッジケーステスト ===");
 	
 	// 1. 空のスタック
-	printOutput(false, nullptr, "\n--- Empty stack ---");
+	printOutput(false, NULL, "\n--- Empty stack ---");
 	{
 		printOutput(false, GREEN_COLOR, "Calling: MutantStack<int> emptyStack;");
 		MutantStack<int> emptyStack;
@@ -293,7 +293,7 @@ void edge_case_test() {
 	}
 	
 	// 2. 単一要素のスタック
-	printOutput(false, nullptr, "\n--- Single element stack ---");
+	printOutput(false, NULL, "\n--- Single element stack ---");
 	{
 		printOutput(false, GREEN_COLOR, "Calling: MutantStack<int> singleStack;");
 		MutantStack<int> singleStack;
@@ -304,7 +304,7 @@ void edge_case_test() {
 	}
 	
 	// 3. 大量の要素
-	printOutput(false, nullptr, "\n--- Large stack (1000 elements) ---");
+	printOutput(false, NULL, "\n--- Large stack (1000 elements) ---");
 	{
 		printOutput(false, GREEN_COLOR, "Calling: MutantStack<int> largeStack;");
 		MutantStack<int> largeStack;
@@ -358,10 +358,10 @@ void edge_case_test() {
 // テンプレートの汎用性を確認するため、異なる型でテストする。
 void type_genericity_test() {
 	printOutput(false, GREEN_COLOR, "\n=== Type Genericity Test ===");
-	printOutput(false, nullptr, "=== 型汎用性テスト ===");
+	printOutput(false, NULL, "=== 型汎用性テスト ===");
 	
 	// 1. std::string型
-	printOutput(false, nullptr, "\n--- std::string type ---");
+	printOutput(false, NULL, "\n--- std::string type ---");
 	{
 		MutantStack<std::string> stringStack;
 		stringStack.push("Hello");
@@ -375,7 +375,7 @@ void type_genericity_test() {
 	}
 	
 	// 2. double型
-	printOutput(false, nullptr, "\n--- double type ---");
+	printOutput(false, NULL, "\n--- double type ---");
 	{
 		MutantStack<double> doubleStack;
 		doubleStack.push(3.14);
@@ -392,10 +392,10 @@ void type_genericity_test() {
 // コピーコンストラクタと代入演算子が正しく動作することを確認する。
 void copy_semantics_test() {
 	printOutput(false, GREEN_COLOR, "\n=== Copy Semantics Test ===");
-	printOutput(false, nullptr, "=== コピーセマンティクステスト ===");
+	printOutput(false, NULL, "=== コピーセマンティクステスト ===");
 	
 	// コピーコンストラクタ
-	printOutput(false, nullptr, "\n--- Copy constructor ---");
+	printOutput(false, NULL, "\n--- Copy constructor ---");
 	{
 		printOutput(false, GREEN_COLOR, "Calling: MutantStack<int> original;");
 		MutantStack<int> original;
@@ -421,7 +421,7 @@ void copy_semantics_test() {
 	
 	// 代入演算子
 	// 要素数1個のMutantStackインスタンスに要素数4個のインスタンスを代入
-	printOutput(false, nullptr, "\n--- Assignment: 1-element instance ← 4-element instance ---");
+	printOutput(false, NULL, "\n--- Assignment: 1-element instance ← 4-element instance ---");
 	{
 		printOutput(false, GREEN_COLOR, "Calling: MutantStack<int> source;");
 		MutantStack<int> source;
@@ -454,7 +454,7 @@ void copy_semantics_test() {
 	}
 	
 	// 要素数4個のMutantStackインスタンスに要素数1個のインスタンスを代入
-	printOutput(false, nullptr, "\n--- Assignment: 4-element instance ← 1-element instance ---");
+	printOutput(false, NULL, "\n--- Assignment: 4-element instance ← 1-element instance ---");
 	{
 		printOutput(false, GREEN_COLOR, "Calling: MutantStack<int> largeStack;");
 		MutantStack<int> largeStack;
@@ -504,7 +504,7 @@ void copy_semantics_test() {
 /* ************************************************************************** */
 void extended_features_test() {
 	printOutput(false, GREEN_COLOR, "\n=== Extended Features Test ===");
-	printOutput(false, nullptr, "=== 拡張機能テスト ===");
+	printOutput(false, NULL, "=== 拡張機能テスト ===");
 	
 	// テスト用のスタックを準備
 	MutantStack<int> testStack;
@@ -520,7 +520,7 @@ void extended_features_test() {
 		
 	
 	// 1. const_iteratorのテスト
-	printOutput(false, nullptr, "\n--- const_iterator test / const_iteratorテスト ---");
+	printOutput(false, NULL, "\n--- const_iterator test / const_iteratorテスト ---");
 	{
 		const MutantStack<int>& constStack = testStack;
 		
@@ -536,7 +536,7 @@ void extended_features_test() {
 	}
 	
 	// 2. reverse_iteratorのテスト
-	printOutput(false, nullptr, "\n--- reverse_iterator test / reverse_iteratorテスト ---");
+	printOutput(false, NULL, "\n--- reverse_iterator test / reverse_iteratorテスト ---");
 	{
 		printOutput(false, CYAN_COLOR, "Reverse iteration with reverse_iterator: ", false);
 		for (MutantStack<int>::reverse_iterator rit = testStack.rbegin(); rit != testStack.rend(); ++rit)
@@ -563,7 +563,7 @@ void extended_features_test() {
 	}
 	
 	// 3. const_reverse_iteratorのテスト
-	printOutput(false, nullptr, "\n--- const_reverse_iterator test / const_reverse_iteratorテスト ---");
+	printOutput(false, NULL, "\n--- const_reverse_iterator test / const_reverse_iteratorテスト ---");
 	{
 		const MutantStack<int>& constStack = testStack;
 		
@@ -578,7 +578,7 @@ void extended_features_test() {
 	}
 	
 	// 4. すべてのイテレータタイプの比較
-	printOutput(false, nullptr, "\n--- Iterator type comparison / イテレータタイプの比較 ---");
+	printOutput(false, NULL, "\n--- Iterator type comparison / イテレータタイプの比較 ---");
 	{
 		printOutput(false, CYAN_COLOR, "Forward (begin to end): ", false);
 		for (MutantStack<int>::iterator it = testStack.begin(); it != testStack.end(); ++it)
@@ -603,7 +603,7 @@ void extended_features_test() {
 	}
 	
 	// 5. イテレータの前後移動テスト（reverse_iterator）
-	printOutput(false, nullptr, "\n--- Reverse iterator increment/decrement test / リバースイテレータ前後移動テスト ---");
+	printOutput(false, NULL, "\n--- Reverse iterator increment/decrement test / リバースイテレータ前後移動テスト ---");
 	{
 		printContainerContents(testStack);
 		MutantStack<int>::reverse_iterator rit = testStack.rbegin();
@@ -640,7 +640,7 @@ void printContainerContents(const T& container, const std::string& label) {
 /* ************************************************************************** */	
 void printOutput(bool useError, const char* color, const std::string& message, bool newline) {
 	std::ostream& stream = useError ? std::cerr : std::cout;
-	if (color != nullptr) {
+	if (color != NULL) {
 		stream << color << message << RESET_COLOR;
 	} else {
 		stream << message;

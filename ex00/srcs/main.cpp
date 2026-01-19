@@ -41,19 +41,19 @@ int main() {
 
 	while (running) {
 		printOutput(false, YELLOW_COLOR, "\n\n=== CPP08 Ex00: easyfind Test Menu ===");
-		printOutput(false, nullptr, "=== CPP08 演習00 テストメニュー ===");
-		printOutput(false, nullptr, "1: Test with std::vector                             std::vectorテスト");
-		printOutput(false, nullptr, "2: Test with std::list                               std::listテスト");
-		printOutput(false, nullptr, "3: Test with std::deque                              std::dequeテスト");
-		printOutput(false, nullptr, "0: Exit                                              終了");
+		printOutput(false, NULL, "=== CPP08 演習00 テストメニュー ===");
+		printOutput(false, NULL, "1: Test with std::vector                             std::vectorテスト");
+		printOutput(false, NULL, "2: Test with std::list                               std::listテスト");
+		printOutput(false, NULL, "3: Test with std::deque                              std::dequeテスト");
+		printOutput(false, NULL, "0: Exit                                              終了");
 		std::cout << "Choose an option / 選択してください: ";
 
 		if (!(std::cin >> choice)) {
 			if (std::cin.eof()) {
-				printOutput(false, nullptr, "\nEOF detected. Exiting... / EOFが検出されました。終了します...");
+				printOutput(false, NULL, "\nEOF detected. Exiting... / EOFが検出されました。終了します...");
 				break;
 			}
-			printOutput(false, nullptr, "⚠️ Invalid input! Please enter a number. / 無効な入力です！数字を入力してください。");
+			printOutput(false, NULL, "⚠️ Invalid input! Please enter a number. / 無効な入力です！数字を入力してください。");
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			continue;
@@ -74,10 +74,10 @@ int main() {
 					running = false;
 					break;
 				default:
-					printOutput(false, nullptr, "Invalid selection. Please try again. / 無効な選択です。もう一度試してください。");
+					printOutput(false, NULL, "Invalid selection. Please try again. / 無効な選択です。もう一度試してください。");
 			}
 		} catch (const std::exception &e) {
-			printOutput(false, nullptr, std::string("⚠️ Exception caught: ") + e.what());
+			printOutput(false, NULL, std::string("⚠️ Exception caught: ") + e.what());
 		}
 	}
 
@@ -86,7 +86,7 @@ int main() {
 /* ************************************************************************** */	
 void test_vector() {
 	printOutput(false, GREEN_COLOR, "\n=== Testing with std::vector ===");
-	printOutput(false, nullptr, "=== std::vectorテスト ===");
+	printOutput(false, NULL, "=== std::vectorテスト ===");
 
 	try {
 		std::vector<int> vec;
@@ -99,36 +99,36 @@ void test_vector() {
 		printContainerContents(vec, "Vector contains");
 
 		// 成功ケース
-		printOutput(false, nullptr, "\n--- Test 1: Finding existing value (3) / 既存の値の検索（3） ---");
+		printOutput(false, NULL, "\n--- Test 1: Finding existing value (3) / 既存の値の検索（3） ---");
 		printOutput(false, GREEN_COLOR, "Calling: easyfind(vec, 3)");
 		try {
 			std::vector<int>::iterator result_it = easyfind(vec, 3);
 			long index = std::distance(vec.begin(), result_it);
 			std::cout << "Found: " << *result_it << " at index: " << index << std::endl;
-			printOutput(false, nullptr, "✅ Passed: Value found successfully / 値が見つかりました");
+			printOutput(false, NULL, "✅ Passed: Value found successfully / 値が見つかりました");
 		} catch (const NoOccurrenceFoundException& e) {
-			printOutput(false, nullptr, std::string("❌ Failed: ") + e.what());
+			printOutput(false, NULL, std::string("❌ Failed: ") + e.what());
 		}
 
 		// 失敗ケース
-		printOutput(false, nullptr, "\n--- Test 2: Finding non-existing value (42) / 存在しない値の検索（42） ---");
+		printOutput(false, NULL, "\n--- Test 2: Finding non-existing value (42) / 存在しない値の検索（42） ---");
 		printOutput(false, GREEN_COLOR, "Calling: easyfind(vec, 42) - Expected to throw exception");
 		try {
 			std::vector<int>::iterator result_it = easyfind(vec, 42);
 			long index = std::distance(vec.begin(), result_it);
 			std::cout << "Found: " << *result_it << " at index: " << index << std::endl;
-			printOutput(false, nullptr, "❌ Failed: Exception should have been thrown! / 例外が発生するはずです！");
+			printOutput(false, NULL, "❌ Failed: Exception should have been thrown! / 例外が発生するはずです！");
 		} catch (const NoOccurrenceFoundException& e) {
 			std::cout << "✅ Passed: Expected exception caught: " << e.what() << std::endl;
 		}
 	} catch (const std::exception &e) {
-		printOutput(false, nullptr, std::string("❌ Failed: ") + e.what());
+		printOutput(false, NULL, std::string("❌ Failed: ") + e.what());
 	}
 }
 /* ************************************************************************** */	
 void test_list() {
 	printOutput(false, GREEN_COLOR, "\n=== Testing with std::list ===");
-	printOutput(false, nullptr, "=== std::listテスト ===");
+	printOutput(false, NULL, "=== std::listテスト ===");
 
 	try {
 		std::list<int> lst;
@@ -139,35 +139,35 @@ void test_list() {
 		printContainerContents(lst, "List contains");
 
 		// 成功ケース
-		printOutput(false, nullptr, "\n--- Test 1: Finding existing value (20) / 既存の値の検索（20） ---");
+		printOutput(false, NULL, "\n--- Test 1: Finding existing value (20) / 既存の値の検索（20） ---");
 		printOutput(false, GREEN_COLOR, "Calling: easyfind(lst, 20)");
 		try {
 			std::list<int>::iterator result = easyfind(lst, 20);
 			long index = std::distance(lst.begin(), result);
 			std::cout << "Found: " << *result << " at index: " << index << std::endl;
-			printOutput(false, nullptr, "✅ Passed: Value found successfully / 値が見つかりました");
+			printOutput(false, NULL, "✅ Passed: Value found successfully / 値が見つかりました");
 		} catch (const NoOccurrenceFoundException& e) {
-			printOutput(false, nullptr, std::string("❌ Failed: ") + e.what());
+			printOutput(false, NULL, std::string("❌ Failed: ") + e.what());
 		}
 
 		// 失敗ケース
-		printOutput(false, nullptr, "\n--- Test 2: Finding non-existing value (42) / 存在しない値の検索（42） ---");
+		printOutput(false, NULL, "\n--- Test 2: Finding non-existing value (42) / 存在しない値の検索（42） ---");
 		printOutput(false, GREEN_COLOR, "Calling: easyfind(lst, 42) - Expected to throw exception");
 		try {
 			std::list<int>::iterator result = easyfind(lst, 42);
 			std::cout << "Found: " << *result << std::endl;
-			printOutput(false, nullptr, "❌ Failed: Exception should have been thrown! / 例外が発生するはずです！");
+			printOutput(false, NULL, "❌ Failed: Exception should have been thrown! / 例外が発生するはずです！");
 		} catch (const NoOccurrenceFoundException& e) {
 			std::cout << "✅ Passed: Expected exception caught: " << e.what() << std::endl;
 		}
 	} catch (const std::exception &e) {
-		printOutput(false, nullptr, std::string("❌ Failed: ") + e.what());
+		printOutput(false, NULL, std::string("❌ Failed: ") + e.what());
 	}
 }
 /* ************************************************************************** */	
 void test_deque() {
 	printOutput(false, GREEN_COLOR, "\n=== Testing with std::deque ===");
-	printOutput(false, nullptr, "=== std::dequeテスト ===");
+	printOutput(false, NULL, "=== std::dequeテスト ===");
 
 	try {
 		std::deque<int> deq;
@@ -178,29 +178,29 @@ void test_deque() {
 		printContainerContents(deq, "Deque contains");
 
 		// 成功ケース
-		printOutput(false, nullptr, "\n--- Test 1: Finding existing value (200) / 既存の値の検索（200） ---");
+		printOutput(false, NULL, "\n--- Test 1: Finding existing value (200) / 既存の値の検索（200） ---");
 		printOutput(false, GREEN_COLOR, "Calling: easyfind(deq, 200)");
 		try {
 			std::deque<int>::iterator result = easyfind(deq, 200);
 			long index = std::distance(deq.begin(), result);
 			std::cout << "Found: " << *result << " at index: " << index << std::endl;
-			printOutput(false, nullptr, "✅ Passed: Value found successfully / 値が見つかりました");
+			printOutput(false, NULL, "✅ Passed: Value found successfully / 値が見つかりました");
 		} catch (const NoOccurrenceFoundException& e) {
-			printOutput(false, nullptr, std::string("❌ Failed: ") + e.what());
+			printOutput(false, NULL, std::string("❌ Failed: ") + e.what());
 		}
 
 		// 失敗ケース
-		printOutput(false, nullptr, "\n--- Test 2: Finding non-existing value (42) / 存在しない値の検索（42） ---");
+		printOutput(false, NULL, "\n--- Test 2: Finding non-existing value (42) / 存在しない値の検索（42） ---");
 		printOutput(false, GREEN_COLOR, "Calling: easyfind(deq, 42) - Expected to throw exception");
 		try {
 			std::deque<int>::iterator result = easyfind(deq, 42);
 			std::cout << "Found: " << *result << std::endl;
-			printOutput(false, nullptr, "❌ Failed: Exception should have been thrown! / 例外が発生するはずです！");
+			printOutput(false, NULL, "❌ Failed: Exception should have been thrown! / 例外が発生するはずです！");
 		} catch (const NoOccurrenceFoundException& e) {
 			std::cout << "✅ Passed: Expected exception caught: " << e.what() << std::endl;
 		}
 	} catch (const std::exception &e) {
-		printOutput(false, nullptr, std::string("❌ Failed: ") + e.what());
+		printOutput(false, NULL, std::string("❌ Failed: ") + e.what());
 	}
 }
 /* ************************************************************************** */	
@@ -223,7 +223,7 @@ void printContainerContents(const T& container, const std::string& label) {
 /* ************************************************************************** */	
 void printOutput(bool useError, const char* color, const std::string& message, bool newline) {
 	std::ostream& stream = useError ? std::cerr : std::cout;
-	if (color != nullptr) {
+	if (color != NULL) {
 		stream << color << message << RESET_COLOR;
 	} else {
 		stream << message;
