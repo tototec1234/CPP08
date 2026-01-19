@@ -6,7 +6,7 @@
 /*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 12:00:00 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/19 14:44:32 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/19 15:46:49 by toruinoue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,6 @@ public:
 	const_reverse_iterator rbegin() const;
 	reverse_iterator rend();
 	const_reverse_iterator rend() const;
-
-	// デバッグ用：constメソッドで状態を変更しない。他のメソッドからは呼び出されておらず補助関数にはなっていない
-	void printContents() const;
 };
 
 // テンプレート実装を.tppファイルからインクルード

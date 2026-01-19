@@ -6,7 +6,7 @@
 /*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 12:00:00 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/19 14:44:44 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/19 15:46:49 by toruinoue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,21 +82,6 @@ typename MutantStack<T>::reverse_iterator MutantStack<T>::rend(){
 template<typename T>
 typename MutantStack<T>::const_reverse_iterator MutantStack<T>::rend() const{
 	return static_cast<const typename std::stack<T>::container_type&>(this->c).rend();
-}
-
-/* ************************************************************************** */
-// デバッグ用メソッドの実装
-/* ************************************************************************** */
-template<typename T>
-void MutantStack<T>::printContents() const{
-	if (this->c.empty())
-	{
-		std::cout << "empty stack" << std::endl;
-		return;
-	}
-	for (typename std::stack<T>::container_type::size_type i = 0; i < this->c.size(); ++i)
-		std::cout << "[" << this->c.at(i) << "] ";
-	std::cout << std::endl;
 }
 
 /* ************************************************************************** */

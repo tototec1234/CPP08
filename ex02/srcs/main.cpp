@@ -6,7 +6,7 @@
 /*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 12:00:00 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/19 15:18:02 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/19 16:54:49 by toruinoue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #include <string>
 
 void printOutput(bool useError, const char* color, const std::string& message, bool newline = true);
+template <typename T>
+void printContainerContents(const T& container, const std::string& label = "");
 void subject_test();
 void comparison_test_with_list();
 void edge_case_test();
@@ -138,48 +140,95 @@ void comparison_test_with_list() {
 	printOutput(false, nullptr, "\n--- MutantStack output ---");
 	{
 		MutantStack<int> mstack;
-		mstack.push(5);
-		mstack.push(17);
+		mstack.push(4200);
+		mstack.push(4201);
 		std::cout << mstack.top() << std::endl;
 		mstack.pop();
 		std::cout << mstack.size() << std::endl;
-		mstack.push(3);
-		mstack.push(5);
-		mstack.push(737);
-		mstack.push(0);
+		mstack.push(4202);
+		mstack.push(4203);
+		mstack.push(4204);
+		mstack.push(4205);
+		mstack.push(4206);
+		mstack.push(4207);
+		mstack.push(4208);
+		mstack.push(4209);
+		mstack.push(4210);
+		mstack.push(4211);
 		
+		printContainerContents(mstack);
 		MutantStack<int>::iterator it = mstack.begin();
+		std::cout << "Step 1 - Iterator at begin(): " << *it << std::endl;
 		++it;
+		std::cout << "Step 2 - After ++it: " << *it << std::endl;
+		++it;
+		++it;
+		std::cout << "Step 3 - After ++it (x2): " << *it << std::endl;
 		--it;
-		mstack.printContents();
+		std::cout << "Step 4 - After --it: " << *it << std::endl;
+		--it;
+		--it;
+		std::cout << "Step 5 - After --it (x2): " << *it << std::endl;
+		++it;
+		++it;
+		++it;
+		std::cout << "Step 6 - After ++it (x3): " << *it << std::endl;
+		++it;
+		++it;
+		++it;
+		++it;
+		++it;
+		++it;
+		std::cout << "Step 7 - After ++it (x6): " << *it << std::endl;
+		printContainerContents(mstack);
 	}
 	
 	// std::listでの実行（同等の操作）
 	printOutput(false, nullptr, "\n--- std::list output (should be identical) ---");
 	{
 		std::list<int> lst;
-		lst.push_back(5);    // push() → push_back()
-		lst.push_back(17);
+		lst.push_back(4200);    // push() → push_back()
+		lst.push_back(4201);
 		std::cout << lst.back() << std::endl;  // top() → back()
 		lst.pop_back();      // pop() → pop_back()
 		std::cout << lst.size() << std::endl;
-		lst.push_back(3);
-		lst.push_back(5);
-		lst.push_back(737);
-		lst.push_back(0);
+		lst.push_back(4202);
+		lst.push_back(4203);
+		lst.push_back(4204);
+		lst.push_back(4205);
+		lst.push_back(4206);
+		lst.push_back(4207);
+		lst.push_back(4208);
+		lst.push_back(4209);
+		lst.push_back(4210);
+		lst.push_back(4211);
 		
+		// イテレータの前後移動テスト（MutantStackと同じ動作）
 		std::list<int>::iterator it = lst.begin();
-		std::list<int>::iterator ite = lst.end();
+		std::cout << "Step 1 - Iterator at begin(): " << *it << std::endl;
 		++it;
+		std::cout << "Step 2 - After ++it: " << *it << std::endl;
+		++it;
+		++it;
+		std::cout << "Step 3 - After ++it (x2): " << *it << std::endl;
 		--it;
-		while (it != ite)
-		{
-			std::cout << *it << std::endl;
-			++it;
-		}
+		std::cout << "Step 4 - After --it: " << *it << std::endl;
+		--it;
+		--it;
+		std::cout << "Step 5 - After --it (x2): " << *it << std::endl;
+		++it;
+		++it;
+		++it;
+		std::cout << "Step 6 - After ++it (x3): " << *it << std::endl;
+		++it;
+		++it;
+		++it;
+		++it;
+		++it;
+		++it;
+		std::cout << "Step 7 - After ++it (x6): " << *it << std::endl;
+		printContainerContents(lst);
 	}
-	
-	printOutput(false, nullptr, "\n✅ Passed: Comparison test / 比較テスト成功");
 }
 /* ************************************************************************** */	
 // エッジケーステスト
@@ -193,7 +242,9 @@ void edge_case_test() {
 	// 1. 空のスタック
 	printOutput(false, nullptr, "\n--- Empty stack ---");
 	{
+		printOutput(false, GREEN_COLOR, "Calling: MutantStack<int> emptyStack;");
 		MutantStack<int> emptyStack;
+		printOutput(false, GREEN_COLOR, "Calling: emptyStack.size()");
 		std::cout << "Empty stack size: " << emptyStack.size() << std::endl;
 		std::cout << "Is empty: " << (emptyStack.empty() ? "true" : "false") << std::endl;
 		
@@ -207,34 +258,63 @@ void edge_case_test() {
 	// 2. 単一要素のスタック
 	printOutput(false, nullptr, "\n--- Single element stack ---");
 	{
+		printOutput(false, GREEN_COLOR, "Calling: MutantStack<int> singleStack;");
 		MutantStack<int> singleStack;
+		printOutput(false, GREEN_COLOR, "Calling: singleStack.push(42);");
 		singleStack.push(42);
 		std::cout << "Single element: ";
-		singleStack.printContents();
+		printContainerContents(singleStack);
 	}
 	
 	// 3. 大量の要素
 	printOutput(false, nullptr, "\n--- Large stack (1000 elements) ---");
 	{
+		printOutput(false, GREEN_COLOR, "Calling: MutantStack<int> largeStack;");
 		MutantStack<int> largeStack;
+		printOutput(false, GREEN_COLOR, "Calling: for (int i = 0; i < 1000; ++i) { largeStack.push(i); }");
 		for (int i = 0; i < 1000; ++i)
 		{
 			largeStack.push(i);
 		}
+		printContainerContents(largeStack);
 		std::cout << "Stack size: " << largeStack.size() << std::endl;
 		std::cout << "Top element: " << largeStack.top() << std::endl;
 		
-		// 最初の5つを表示
+		// イテレータの移動を確認（スタックの底から順に）
+		printOutput(false, GREEN_COLOR, "Calling: MutantStack<int>::iterator it = largeStack.begin();");
 		MutantStack<int>::iterator it = largeStack.begin();
-		std::cout << "First 5 elements: ";
-		for (int i = 0; i < 5 && it != largeStack.end(); ++i, ++it)
+		std::cout << "Iterator at begin() (bottom of stack): " << *it << std::endl;
+		
+		printOutput(false, GREEN_COLOR, "Calling: ++it (x10 times)");
+		for (int i = 0; i < 10; ++i)
 		{
-			std::cout << *it << " ";
+			++it;
 		}
-		std::cout << std::endl;
+		std::cout << "After ++it (x10): " << *it << std::endl;
+		
+		printOutput(false, GREEN_COLOR, "Calling: --it (x5 times)");
+		for (int i = 0; i < 5; ++i)
+		{
+			--it;
+		}
+		std::cout << "After --it (x5): " << *it << std::endl;
+		
+		// 最後の要素（top）の直前まで移動して確認
+		printOutput(false, GREEN_COLOR, "Iterating to last element (top of stack)");
+		MutantStack<int>::iterator it_end = largeStack.end();
+		--it_end;  // end()の1つ前が最後の要素（top）
+		std::cout << "Last element (top): " << *it_end << std::endl;
+		
+		// 現在位置から最後の要素までの距離を計算
+		int distance = 0;
+		MutantStack<int>::iterator it_temp = it;
+		while (it_temp != largeStack.end())
+		{
+			++it_temp;
+			++distance;
+		}
+		std::cout << "Distance from current position to end(): " << distance << std::endl;
 	}
-	
-	printOutput(false, nullptr, "\n✅ Passed: Edge case test / エッジケーステスト成功");
 }
 /* ************************************************************************** */	
 // 型汎用性テスト
@@ -253,7 +333,7 @@ void type_genericity_test() {
 		stringStack.push("Templates");
 		
 		std::cout << "String stack contents: ";
-		stringStack.printContents();
+		printContainerContents(stringStack);
 		std::cout << "Top: " << stringStack.top() << std::endl;
 	}
 	
@@ -266,30 +346,9 @@ void type_genericity_test() {
 		doubleStack.push(1.41);
 		
 		std::cout << "Double stack contents: ";
-		doubleStack.printContents();
+		printContainerContents(doubleStack);
+		std::cout << "Top: " << doubleStack.top() << std::endl;
 	}
-	
-	// 3. イテレータの前後移動テスト
-	printOutput(false, nullptr, "\n--- Iterator increment/decrement test ---");
-	{
-		MutantStack<int> testStack;
-		testStack.push(1);
-		testStack.push(2);
-		testStack.push(3);
-		testStack.push(4);
-		testStack.push(5);
-		
-		MutantStack<int>::iterator it = testStack.begin();
-		std::cout << "Initial: " << *it << std::endl;
-		++it;
-		std::cout << "After ++: " << *it << std::endl;
-		--it;
-		std::cout << "After --: " << *it << std::endl;
-		it += 2;
-		std::cout << "After += 2: " << *it << std::endl;
-	}
-	
-	printOutput(false, nullptr, "\n✅ Passed: Type genericity test / 型汎用性テスト成功");
 }
 /* ************************************************************************** */	
 // コピーセマンティクステスト
@@ -301,43 +360,96 @@ void copy_semantics_test() {
 	// コピーコンストラクタ
 	printOutput(false, nullptr, "\n--- Copy constructor ---");
 	{
+		printOutput(false, GREEN_COLOR, "Calling: MutantStack<int> original;");
 		MutantStack<int> original;
+		printOutput(false, GREEN_COLOR, "Calling: original.push(10);");
 		original.push(10);
+		printOutput(false, GREEN_COLOR, "Calling: original.push(20);");
 		original.push(20);
+		printOutput(false, GREEN_COLOR, "Calling: original.push(30);");
 		original.push(30);
 		
+		printOutput(false, GREEN_COLOR, "Calling: MutantStack<int> copied(original);");
 		MutantStack<int> copied(original);
 		
 		std::cout << "Original size: " << original.size() << std::endl;
 		std::cout << "Copied size: " << copied.size() << std::endl;
 		
 		std::cout << "Original contents: ";
-		original.printContents();
+		printContainerContents(original);
 		
 		std::cout << "Copied contents: ";
-		copied.printContents();
+		printContainerContents(copied);
 	}
 	
 	// 代入演算子
-	printOutput(false, nullptr, "\n--- Assignment operator ---");
+	// 要素数1個のMutantStackインスタンスに要素数4個のインスタンスを代入
+	printOutput(false, nullptr, "\n--- Assignment: 1-element instance ← 4-element instance ---");
 	{
+		printOutput(false, GREEN_COLOR, "Calling: MutantStack<int> source;");
 		MutantStack<int> source;
+		printOutput(false, GREEN_COLOR, "Calling: source.push(100);");
 		source.push(100);
+		printOutput(false, GREEN_COLOR, "Calling: source.push(200);");
 		source.push(200);
+		printOutput(false, GREEN_COLOR, "Calling: source.push(300);");
+		source.push(300);
+		printOutput(false, GREEN_COLOR, "Calling: source.push(400);");
+		source.push(400);
 		
+		printOutput(false, GREEN_COLOR, "Calling: MutantStack<int> target;");
 		MutantStack<int> target;
+		printOutput(false, GREEN_COLOR, "Calling: target.push(999);  // これは上書きされる");
 		target.push(999);  // これは上書きされる
 		
+		std::cout << "Target before assignment - size: " << target.size() << std::endl;
+		std::cout << "Target before assignment - contents: ";
+		printContainerContents(target);
+		
+		printOutput(false, GREEN_COLOR, "Calling: target = source;");
 		target = source;
 		
 		std::cout << "Source size: " << source.size() << std::endl;
 		std::cout << "Target size: " << target.size() << std::endl;
 		
 		std::cout << "Target contents: ";
-		target.printContents();
+		printContainerContents(target);
 	}
 	
-	printOutput(false, nullptr, "\n✅ Passed: Copy semantics test / コピーセマンティクステスト成功");
+	// 要素数4個のMutantStackインスタンスに要素数1個のインスタンスを代入
+	printOutput(false, nullptr, "\n--- Assignment: 4-element instance ← 1-element instance ---");
+	{
+		printOutput(false, GREEN_COLOR, "Calling: MutantStack<int> largeStack;");
+		MutantStack<int> largeStack;
+		printOutput(false, GREEN_COLOR, "Calling: largeStack.push(1000);");
+		largeStack.push(1000);
+		printOutput(false, GREEN_COLOR, "Calling: largeStack.push(2000);");
+		largeStack.push(2000);
+		printOutput(false, GREEN_COLOR, "Calling: largeStack.push(3000);");
+		largeStack.push(3000);
+		printOutput(false, GREEN_COLOR, "Calling: largeStack.push(4000);");
+		largeStack.push(4000);
+		
+		printOutput(false, GREEN_COLOR, "Calling: MutantStack<int> smallStack;");
+		MutantStack<int> smallStack;
+		printOutput(false, GREEN_COLOR, "Calling: smallStack.push(50);");
+		smallStack.push(50);
+		
+		std::cout << "largeStack before assignment - size: " << largeStack.size() << std::endl;
+		std::cout << "largeStack before assignment - contents: ";
+		printContainerContents(largeStack);
+		
+		std::cout << "smallStack size: " << smallStack.size() << std::endl;
+		std::cout << "smallStack contents: ";
+		printContainerContents(smallStack);
+		
+		printOutput(false, GREEN_COLOR, "Calling: largeStack = smallStack;");
+		largeStack = smallStack;
+		
+		std::cout << "largeStack after assignment - size: " << largeStack.size() << std::endl;
+		std::cout << "largeStack after assignment - contents: ";
+		printContainerContents(largeStack);
+	}
 }
 /* ************************************************************************** */	
 // 拡張機能テスト
@@ -389,7 +501,7 @@ void extended_features_test() {
 		MutantStack<int>::reverse_iterator mod_it = testStack.rbegin();
 		*mod_it = 99;
 		std::cout << "Modified last element to: " << *mod_it << std::endl;
-		testStack.printContents();
+		printContainerContents(testStack);
 		// 元に戻す
 		*mod_it = 5;
 	}
@@ -448,8 +560,24 @@ void extended_features_test() {
 		rit += 2;
 		std::cout << "After += 2: " << *rit << std::endl;
 	}
-	
-	printOutput(false, nullptr, "\n✅ Passed: Extended features test / 拡張機能テスト成功");
+}
+/* ************************************************************************** */	
+// テンプレート関数として実装: std::listは[]演算子（Random Access）をサポートしていないため、
+// すべてのコンテナタイプ（vector, list, deque, MutantStackなど）で共通して使用できるイテレータベースの実装が必要
+template <typename T>
+void printContainerContents(const T& container, const std::string& label) {
+	if (!label.empty())
+		std::cout << label << ": ";
+	if (container.empty()) {
+		std::cout << "empty container" << std::endl;
+		return;
+	}
+	typename T::const_iterator it = container.begin();
+	typename T::const_iterator end = container.end();
+	for (; it != end; ++it) {
+		std::cout << "[" << *it << "] ";
+	}
+	std::cout << std::endl;
 }
 /* ************************************************************************** */	
 void printOutput(bool useError, const char* color, const std::string& message, bool newline) {
