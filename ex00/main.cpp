@@ -6,7 +6,7 @@
 /*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 22:00:00 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/19 15:03:27 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/19 14:59:15 by toruinoue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int main() {
 	while (running) {
 		printOutput(false, YELLOW_COLOR, "\n\n=== CPP08 Ex00: easyfind Test Menu ===");
 		printOutput(false, nullptr, "=== CPP08 演習00 テストメニュー ===");
-		printOutput(false, nullptr, "1: Test with std::vector                             std::vectorテスト");
-		printOutput(false, nullptr, "2: Test with std::list                               std::listテスト");
+		printOutput(false, nullptr, "1: Test with std::vector                              std::vectorテスト");
+		printOutput(false, nullptr, "2: Test with std::list                                std::listテスト");
 		printOutput(false, nullptr, "3: Test with std::deque                              std::dequeテスト");
 		printOutput(false, nullptr, "0: Exit                                              終了");
 		std::cout << "Choose an option / 選択してください: ";
