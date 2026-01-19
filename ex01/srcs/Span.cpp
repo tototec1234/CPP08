@@ -119,7 +119,7 @@ void Span::addRange(	std::vector<int>::iterator begin,
 	 * vectorの場合（ランダムアクセスイテレータ）はO(1)だが、std::distance()は実装によって最適化される
 	 */
 		throw std::out_of_range("ERROR : Range filling would outgrow the Span instance");
-	this->_vec.insert(_vec.begin(), begin, end);
+	this->_vec.insert(_vec.end(), begin, end);
 }
 
 /* ************************************************************************** */

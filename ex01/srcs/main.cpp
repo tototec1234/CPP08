@@ -49,7 +49,7 @@ int main() {
 		printOutput(false, NULL, "=== CPP08 演習01 テストメニュー ===");
 		printOutput(false, NULL, "1: Test Subject (includes subject.pdf example)      課題書のテスト例");
 		printOutput(false, NULL, "2: Test addRange Function                           addRange関数テスト");
-		printOutput(false, NULL, "3: Test Large Range (999999 elements)               大量データテスト");
+		printOutput(false, NULL, "3: Test Large Range (123456 elements)               大量データテスト");
 		printOutput(false, NULL, "4: Test Capacity Overflow Exception                 容量オーバーフローテスト");
 		printOutput(false, NULL, "5: Test Insufficient Elements Exception             要素不足例外テスト");
 		printOutput(false, NULL, "0: Exit                                             終了");
@@ -98,8 +98,8 @@ int main() {
 }
 /* ************************************************************************** */	
 void test_subject() {
-	printOutput(false, GREEN_COLOR, "\n=== Testing Subject Example ===");
-	printOutput(false, NULL, "=== 課題書のテスト例 ===");
+	printOutput(false, GREEN_COLOR, "\n=== 1: Testing Subject Example ===");
+	printOutput(false, NULL, "=== 1: 課題書のテスト例 ===");
 
 	try {
 		Span sp = Span(5);
@@ -123,8 +123,8 @@ void test_subject() {
 }
 /* ************************************************************************** */	
 void test_addRange() {
-	printOutput(false, GREEN_COLOR, "\n=== Testing addRange Function ===");
-	printOutput(false, NULL, "=== addRange関数テスト ===");
+	printOutput(false, GREEN_COLOR, "\n=== 2: Testing addRange Function ===");
+	printOutput(false, NULL, "=== 2: addRange関数テスト ===");
 
 	// 1. 基本的な使用例：空のSpanに一括追加
 	printOutput(false, NULL, "\n----- Test 1: Basic addRange (empty Span) / 基本使用例（空のSpan） -----");
@@ -141,7 +141,7 @@ void test_addRange() {
 		bulkSpan.printContents();
 		std::cout << std::endl;
 
-		printVectorContents(sourceNumbers, "Source vector contains");
+		printVectorContents(sourceNumbers, "Source vector contains : sourceNumbers");
 
 		// addRangeを使用して一括追加!!!!!!!!!!!!!!!!!!!
 		printOutput(false, GREEN_COLOR, "Calling: bulkSpan.addRange(sourceNumbers.begin(), sourceNumbers.end())");
@@ -287,20 +287,20 @@ void test_addRange() {
 		span.printContents();
 
 		std::vector<int> fullArray;
-		fullArray.push_back(1);
-		fullArray.push_back(2);
-		fullArray.push_back(3);
-		fullArray.push_back(4);
-		fullArray.push_back(5);
-		fullArray.push_back(6);
-		fullArray.push_back(7);
-		fullArray.push_back(8);
+		fullArray.push_back(10);	// インデックス　0
+		fullArray.push_back(20);	// インデックス　1
+		fullArray.push_back(30);	// インデックス　2
+		fullArray.push_back(40);	// インデックス　3
+		fullArray.push_back(50);	// インデックス　4
+		fullArray.push_back(60);	// インデックス　5
+		fullArray.push_back(70);	// インデックス　6
+		fullArray.push_back(80);	// インデックス　7
 
 		printVectorContents(fullArray, "Full array contains");
 
-		// 配列の一部（インデックス1から4まで、つまり{2,3,4}）のみを追加
+		// 配列の一部（インデックス1から2まで、つまり{20,30}）のみを追加 ///////////////////////////////
 		std::vector<int>::iterator start = fullArray.begin() + 1;  // インデックス1から
-		std::vector<int>::iterator end = fullArray.begin() + 4;    // インデックス4まで（4は含まない）
+		std::vector<int>::iterator end = fullArray.begin() + 3;    // インデックス3まで（3は含まない）
 
 		std::cout << "Partial range to add: ";
 		for (std::vector<int>::iterator it = start; it != end; ++it) {
@@ -308,16 +308,16 @@ void test_addRange() {
 			if (it + 1 != end)
 				std::cout << " ";
 		}
-		std::cout << " (indices 1-3 of full array)" << std::endl;
+		std::cout << " (indices 1-2 of full array)" << std::endl;
 
-		printOutput(false, GREEN_COLOR, "Calling: span.addRange(fullArray.begin() + 1, fullArray.begin() + 4)");
+		printOutput(false, GREEN_COLOR, "Calling: span.addRange(fullArray.begin() + 1, fullArray.begin() + 3)");
 		span.addRange(start, end);
 
 		span.printContents();
 
-		// さらに別の部分範囲（インデックス4から8まで、つまり{5,6,7,8}）を追加
+		// さらに別の部分範囲（インデックス4から6まで、つまり{50,60,70}）を追加  ///////////////////////////////
 		std::vector<int>::iterator start2 = fullArray.begin() + 4;  // インデックス4から
-		std::vector<int>::iterator end2 = fullArray.begin() + 8;    // インデックス8まで（8は含まない）
+		std::vector<int>::iterator end2 = fullArray.begin() + 7;    // インデックス7まで（7は含まない）
 
 		std::cout << "Partial range to add: ";
 		for (std::vector<int>::iterator it = start2; it != end2; ++it) {
@@ -325,17 +325,34 @@ void test_addRange() {
 			if (it + 1 != end2)
 				std::cout << " ";
 		}
-		std::cout << " (indices 4-7 of full array)" << std::endl;
+		std::cout << " (indices 4-6 of full array)" << std::endl;
 
-		printOutput(false, GREEN_COLOR, "Calling: span.addRange(fullArray.begin() + 4, fullArray.begin() + 8)");
+		printOutput(false, GREEN_COLOR, "Calling: span.addRange(fullArray.begin() + 4, fullArray.begin() + 7)");
 		span.addRange(start2, end2);
 
 		span.printContents();
 
-		// さらにfullArrayに9と10を追加
-		fullArray.push_back(9);
-		fullArray.push_back(10);
-		printVectorContents(fullArray, "Full array after adding 9 and 10 contains");
+		// さらに別の部分範囲（インデックス0から1まで、つまり{10,20}）を追加  ///////////////////////////////
+		std::vector<int>::iterator start3 = fullArray.begin() + 0;  // インデックス0から
+		std::vector<int>::iterator end3 = fullArray.begin() + 2;    // インデックス2まで（2は含まない）
+
+				std::cout << "Partial range to add: ";
+		for (std::vector<int>::iterator it = start3; it != end3; ++it) {
+			std::cout << *it;
+			if (it + 1 != end3)
+				std::cout << " ";
+		}
+		std::cout << " (indices 0-1 of full array)" << std::endl;
+
+		
+		printOutput(false, GREEN_COLOR, "Calling: span.addRange(fullArray.begin() + 0, fullArray.begin() + 2)");
+		span.addRange(start3, end3);
+
+		span.printContents();
+		// // さらにfullArrayに9と10を追加
+		// fullArray.push_back(9);
+		// fullArray.push_back(10);
+		// printVectorContents(fullArray, "Full array after adding 9 and 10 contains");
 
 		// 全部を追加しようとする（現在7個入っているので、7+10=17個になり容量10を超える）
 		std::cout << "Attempting to add all elements: ";
@@ -356,24 +373,23 @@ void test_addRange() {
 	} catch (const std::exception& e) {
 		std::cout << "❌ Failed: " << e.what() << std::endl;
 	}
-
-	printOutput(false, NULL, "\n✅ Passed: addRange test / addRangeテスト成功");
 }
 /* ************************************************************************** */	
 void test_largeRange() {
-	printOutput(false, GREEN_COLOR, "\n=== Testing Large Range ===");
-	printOutput(false, NULL, "=== 大量データテスト ===");
+	printOutput(false, GREEN_COLOR, "\n=== 3: Testing Large Range ===");
+	printOutput(false, NULL, "=== 3: 大量データテスト ===");
 
 	try {
-		Span largeSpan = Span(999999);
+		printOutput(false, GREEN_COLOR, "Calling: Span largeSpan(123456)");
+		Span largeSpan = Span(123456);
 		std::vector<int> largeVec;
 		std::srand(time(NULL));
-		for (unsigned int i = 0; i < 999999; i++) {
-			int random_int = rand() % 100000000;
+		for (unsigned int i = 0; i < 123456; i++) {
+			int random_int = rand() % 1234567890;
 			largeVec.push_back(random_int);
 		}
 
-		printOutput(false, GREEN_COLOR, "Calling: largeSpan.addRange(largeVec.begin(), largeVec.end()) - Adding 999999 elements");
+		printOutput(false, GREEN_COLOR, "Calling: largeSpan.addRange(largeVec.begin(), largeVec.end()) - Adding 123456 elements");
 		largeSpan.addRange(largeVec.begin(), largeVec.end());
 
 		std::cout << "shortest span: " << largeSpan.shortestSpan() << std::endl;
@@ -387,17 +403,20 @@ void test_largeRange() {
 }
 /* ************************************************************************** */	
 void test_capacityOverflow() {
-	printOutput(false, GREEN_COLOR, "\n=== Testing Capacity Overflow Exception ===");
-	printOutput(false, NULL, "=== 容量オーバーフローテスト ===");
+	printOutput(false, GREEN_COLOR, "\n=== 4: Testing Capacity Overflow Exception ===");
+	printOutput(false, NULL, "=== 4: 容量オーバーフローテスト ===");
 
 	// addNumber の容量オーバーフローテスト
 	printOutput(false, NULL, "\n----- Test: addNumber overflow / addNumberオーバーフロー -----");
 	try {
+		printOutput(false, GREEN_COLOR, "Calling: Span smallSpan(2)");
 		Span smallSpan(2);  // 容量2のSpanを作成
+		printOutput(false, GREEN_COLOR, "Calling: smallSpan.addNumber(1)");
 		smallSpan.addNumber(1);
+		printOutput(false, GREEN_COLOR, "Calling: smallSpan.addNumber(2)");
 		smallSpan.addNumber(2);
 		// 3つ目の要素を追加しようとする（例外が発生するはず）
-		
+		printOutput(false, GREEN_COLOR, "Calling: smallSpan.addNumber(3) - Expected to throw exception");
 		smallSpan.addNumber(3);
 		printOutput(false, NULL, "❌ Failed: Exception should have been thrown!");
 	} catch (const std::out_of_range& e) {
@@ -411,7 +430,8 @@ void test_capacityOverflow() {
 		for (int i = 0; i < 5; ++i) {
 			tooManyNumbers.push_back(i * 10);
 		}
-
+		printVectorContents(tooManyNumbers, "Source vector contains : tooManyNumbers");
+		printOutput(false, GREEN_COLOR, "Calling: Span tinySpan(3)");
 		Span tinySpan(3);
 		printOutput(false, GREEN_COLOR, "Calling: tinySpan.addRange(tooManyNumbers.begin(), tooManyNumbers.end()) - Expected to throw exception");
 		tinySpan.addRange(tooManyNumbers.begin(), tooManyNumbers.end());
@@ -423,14 +443,16 @@ void test_capacityOverflow() {
 	printOutput(false, NULL, "\n✅ Capacity overflow test completed / 容量オーバーフローテスト完了");
 }
 /* ************************************************************************** */	
-void test_insufficientElements() {
-	printOutput(false, GREEN_COLOR, "\n=== Testing Insufficient Elements Exception ===");
-	printOutput(false, NULL, "=== 要素不足例外テスト ===");
+void test_insufficientElements() {	printOutput(false, GREEN_COLOR, "\n=== 5: Testing Insufficient Elements Exception ===");
+
+	printOutput(false, NULL, "=== 5: 要素不足例外テスト ===");
 
 	// empty span の shortestSpan テスト
 	printOutput(false, NULL, "\n----- Test: Empty span shortestSpan / 空のSpan shortestSpan -----");
 	try {
+		printOutput(false, GREEN_COLOR, "Calling: Span emptySpan(5)");
 		Span emptySpan(5);
+		printOutput(false, GREEN_COLOR, "Calling: emptySpan.shortestSpan() - Expected to throw exception");
 		emptySpan.shortestSpan(); // 例外が発生するはず
 		printOutput(false, NULL, "❌ Failed: Empty span should throw exception!");
 	} catch (const std::out_of_range& e) {
@@ -440,22 +462,41 @@ void test_insufficientElements() {
 	// empty span の longestSpan テスト
 	printOutput(false, NULL, "\n----- Test: Empty span longestSpan / 空のSpan longestSpan -----");
 	try {
+		printOutput(false, GREEN_COLOR, "Calling: Span emptySpan(5)");
 		Span emptySpan(5);
+		printOutput(false, GREEN_COLOR, "Calling: emptySpan.longestSpan() - Expected to throw exception");
 		emptySpan.longestSpan(); // 例外が発生するはず
 		printOutput(false, NULL, "❌ Failed: Empty span should throw exception!");
 	} catch (const std::out_of_range& e) {
 		std::cout << "✅ Passed: Empty span exception (longest): " << e.what() << std::endl;
 	}
 
-	// single element span のテスト
-	printOutput(false, NULL, "\n----- Test: Single element span / 単一要素Span -----");
+	// single element span の shortestSpan テスト
+	printOutput(false, NULL, "\n----- Test: Single element span shortestSpan / 単一要素Span shortestSpan -----");
 	try {
+		printOutput(false, GREEN_COLOR, "Calling: Span singleSpan(5)");
 		Span singleSpan(5);
+		printOutput(false, GREEN_COLOR, "Calling: singleSpan.addNumber(42)");
 		singleSpan.addNumber(42);
+		printOutput(false, GREEN_COLOR, "Calling: singleSpan.shortestSpan() - Expected to throw exception");
 		singleSpan.shortestSpan(); // 例外が発生するはず
 		printOutput(false, NULL, "❌ Failed: Single element span should throw exception!");
 	} catch (const std::out_of_range& e) {
-		std::cout << "✅ Passed: Single element span exception: " << e.what() << std::endl;
+		std::cout << "✅ Passed: Single element span exception (shortest): " << e.what() << std::endl;
+	}
+
+	// single element span の longestSpan テスト
+	printOutput(false, NULL, "\n----- Test: Single element span longestSpan / 単一要素Span longestSpan -----");
+	try {
+		printOutput(false, GREEN_COLOR, "Calling: Span singleSpan(5)");
+		Span singleSpan(5);
+		printOutput(false, GREEN_COLOR, "Calling: singleSpan.addNumber(42)");
+		singleSpan.addNumber(42);
+		printOutput(false, GREEN_COLOR, "Calling: singleSpan.longestSpan() - Expected to throw exception");
+		singleSpan.longestSpan(); // 例外が発生するはず
+		printOutput(false, NULL, "❌ Failed: Single element span should throw exception!");
+	} catch (const std::out_of_range& e) {
+		std::cout << "✅ Passed: Single element span exception (longest): " << e.what() << std::endl;
 	}
 
 	printOutput(false, NULL, "\n✅ Insufficient elements test completed / 要素不足テスト完了");
