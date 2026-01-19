@@ -6,7 +6,7 @@
 /*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 21:35:11 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/19 15:02:35 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/19 15:05:21 by toruinoue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ template <typename T>
 typename T::iterator easyfind(T &container, int value);
 
 // テンプレート実装を.tppファイルからインクルード
-#include "easyfind.tpp"
+# include "easyfind.tpp"
 
 #endif
 

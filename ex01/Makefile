@@ -26,6 +26,7 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.cpp
 
 clean:
 	rm -f $(OBJS) $(DEPS)
+	@rmdir $(OBJS_DIR) 2>/dev/null || true
 
 fclean: clean
 	rm -f $(NAME)
