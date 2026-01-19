@@ -6,7 +6,7 @@
 /*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 12:00:00 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/19 16:54:49 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/19 17:40:25 by toruinoue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -460,50 +460,58 @@ void extended_features_test() {
 	
 	// テスト用のスタックを準備
 	MutantStack<int> testStack;
-	testStack.push(1);
-	testStack.push(2);
-	testStack.push(3);
-	testStack.push(4);
-	testStack.push(5);
+	testStack.push(1009);
+	testStack.push(2008);
+	testStack.push(3007);
+	testStack.push(4006);
+	testStack.push(5005);
+	testStack.push(6004);
+	testStack.push(7003);
+	testStack.push(9002);
+	testStack.push(11111);
+		
 	
 	// 1. const_iteratorのテスト
 	printOutput(false, nullptr, "\n--- const_iterator test / const_iteratorテスト ---");
 	{
 		const MutantStack<int>& constStack = testStack;
 		
-		std::cout << "Forward iteration with const_iterator: ";
-		MutantStack<int>::const_iterator cit = constStack.begin();
-		MutantStack<int>::const_iterator cite = constStack.end();
-		for (; cit != cite; ++cit)
+		printOutput(false, CYAN_COLOR, "Forward iteration with const_iterator: ", false);
+		for (MutantStack<int>::const_iterator cit = constStack.begin(); cit != constStack.end(); ++cit)
 		{
 			std::cout << *cit << " ";
 		}
 		std::cout << std::endl;
 		
 		// const_iteratorは読み取り専用であることを確認
-		std::cout << "const_iterator is read-only (cannot modify elements)" << std::endl;
+		printOutput(false, CYAN_COLOR, "const_iterator is read-only (cannot modify elements)");
 	}
 	
 	// 2. reverse_iteratorのテスト
 	printOutput(false, nullptr, "\n--- reverse_iterator test / reverse_iteratorテスト ---");
 	{
-		std::cout << "Reverse iteration with reverse_iterator: ";
-		MutantStack<int>::reverse_iterator rit = testStack.rbegin();
-		MutantStack<int>::reverse_iterator rite = testStack.rend();
-		for (; rit != rite; ++rit)
+		printOutput(false, CYAN_COLOR, "Reverse iteration with reverse_iterator: ", false);
+		for (MutantStack<int>::reverse_iterator rit = testStack.rbegin(); rit != testStack.rend(); ++rit)
 		{
 			std::cout << *rit << " ";
 		}
 		std::cout << std::endl;
+		printOutput(false, GREEN_COLOR, "Calling: printContainerContents(testStack);");
+		printContainerContents(testStack);	
 		
 		// reverse_iteratorで要素を変更できることを確認
-		std::cout << "Modifying elements with reverse_iterator: ";
+		printOutput(false, CYAN_COLOR, "Modifying elements with reverse_iterator: \n", false);
 		MutantStack<int>::reverse_iterator mod_it = testStack.rbegin();
+		printOutput(false, GREEN_COLOR, "Calling: MutantStack<int>::reverse_iterator mod_it = testStack.rbegin();");
 		*mod_it = 99;
-		std::cout << "Modified last element to: " << *mod_it << std::endl;
+		printOutput(false, GREEN_COLOR, "Calling: *mod_it = 99;");
+		printOutput(false, CYAN_COLOR, "Modified last element to: ", false);
+		std::cout << *mod_it << std::endl;
 		printContainerContents(testStack);
 		// 元に戻す
 		*mod_it = 5;
+		printOutput(false, GREEN_COLOR, "Calling: *mod_it = 5;");
+		printContainerContents(testStack);
 	}
 	
 	// 3. const_reverse_iteratorのテスト
@@ -511,38 +519,36 @@ void extended_features_test() {
 	{
 		const MutantStack<int>& constStack = testStack;
 		
-		std::cout << "Reverse iteration with const_reverse_iterator: ";
-		MutantStack<int>::const_reverse_iterator crit = constStack.rbegin();
-		MutantStack<int>::const_reverse_iterator crite = constStack.rend();
-		for (; crit != crite; ++crit)
+		printOutput(false, CYAN_COLOR, "Reverse iteration with const_reverse_iterator: ", false);
+		for (MutantStack<int>::const_reverse_iterator crit = constStack.rbegin(); crit != constStack.rend(); ++crit)
 		{
 			std::cout << *crit << " ";
 		}
 		std::cout << std::endl;
-		
-		std::cout << "const_reverse_iterator is read-only (cannot modify elements)" << std::endl;
+		printContainerContents(testStack);
+		printOutput(false, CYAN_COLOR, "const_reverse_iterator is read-only (cannot modify elements)");
 	}
 	
 	// 4. すべてのイテレータタイプの比較
 	printOutput(false, nullptr, "\n--- Iterator type comparison / イテレータタイプの比較 ---");
 	{
-		std::cout << "Forward (begin to end): ";
+		printOutput(false, CYAN_COLOR, "Forward (begin to end): ", false);
 		for (MutantStack<int>::iterator it = testStack.begin(); it != testStack.end(); ++it)
 			std::cout << *it << " ";
 		std::cout << std::endl;
 		
-		std::cout << "Reverse (rbegin to rend): ";
+		printOutput(false, CYAN_COLOR, "Reverse (rbegin to rend): ", false);
 		for (MutantStack<int>::reverse_iterator it = testStack.rbegin(); it != testStack.rend(); ++it)
 			std::cout << *it << " ";
 		std::cout << std::endl;
 		
 		const MutantStack<int>& constStack = testStack;
-		std::cout << "Const forward: ";
+		printOutput(false, CYAN_COLOR, "Const forward: ", false);
 		for (MutantStack<int>::const_iterator it = constStack.begin(); it != constStack.end(); ++it)
 			std::cout << *it << " ";
 		std::cout << std::endl;
 		
-		std::cout << "Const reverse: ";
+		printOutput(false, CYAN_COLOR, "Const reverse: ", false);
 		for (MutantStack<int>::const_reverse_iterator it = constStack.rbegin(); it != constStack.rend(); ++it)
 			std::cout << *it << " ";
 		std::cout << std::endl;
@@ -551,14 +557,21 @@ void extended_features_test() {
 	// 5. イテレータの前後移動テスト（reverse_iterator）
 	printOutput(false, nullptr, "\n--- Reverse iterator increment/decrement test / リバースイテレータ前後移動テスト ---");
 	{
+		printContainerContents(testStack);
 		MutantStack<int>::reverse_iterator rit = testStack.rbegin();
 		std::cout << "Initial (rbegin): " << *rit << std::endl;
 		++rit;
-		std::cout << "After ++: " << *rit << std::endl;
+		printOutput(false, CYAN_COLOR, "After ++: ", false);
+		std::cout << *rit << std::endl;
 		--rit;
-		std::cout << "After --: " << *rit << std::endl;
+		printOutput(false, CYAN_COLOR, "After --: ", false);
+		std::cout << *rit << std::endl;
 		rit += 2;
-		std::cout << "After += 2: " << *rit << std::endl;
+		printOutput(false, CYAN_COLOR, "After += 2: ", false);
+		std::cout << *rit << std::endl;
+		rit -= 4;
+		printOutput(false, CYAN_COLOR, "After -= 4: ", false);
+		std::cout << *rit << std::endl;
 	}
 }
 /* ************************************************************************** */	
@@ -572,9 +585,7 @@ void printContainerContents(const T& container, const std::string& label) {
 		std::cout << "empty container" << std::endl;
 		return;
 	}
-	typename T::const_iterator it = container.begin();
-	typename T::const_iterator end = container.end();
-	for (; it != end; ++it) {
+	for (typename T::const_iterator it = container.begin(); it != container.end(); ++it) {
 		std::cout << "[" << *it << "] ";
 	}
 	std::cout << std::endl;
