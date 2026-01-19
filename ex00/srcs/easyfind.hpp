@@ -14,8 +14,7 @@
 # define EASYFIND_HPP
 
 # include <algorithm>
-# include <sstream>
-# include <stdexcept>
+# include <exception>
 
 // classes
 class NoOccurrenceFoundException : public std::exception
