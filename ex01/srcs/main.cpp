@@ -6,7 +6,7 @@
 /*   By: torinoue <torinoue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 22:00:00 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/19 21:19:53 by torinoue         ###   ########.fr       */
+/*   Updated: 2026/01/19 23:25:58 by torinoue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -406,7 +406,7 @@ void test_capacityOverflow() {
 	printOutput(false, GREEN_COLOR, "\n=== 4: Testing Capacity Overflow Exception ===");
 	printOutput(false, NULL, "=== 4: 容量オーバーフローテスト ===");
 
-	// addNumber の容量オーバーフローテスト
+	// addNumber の容量オーバーフローテスト	 //////////////////////////////////////
 	printOutput(false, NULL, "\n----- Test: addNumber overflow / addNumberオーバーフロー -----");
 	try {
 		printOutput(false, GREEN_COLOR, "Calling: Span smallSpan(2)");
@@ -423,7 +423,7 @@ void test_capacityOverflow() {
 		std::cout << "✅ Passed: Expected overflow exception caught: " << e.what() << std::endl;
 	}
 
-	// addRangeの容量オーバーフローテスト
+	// addRangeの容量オーバーフローテスト	 //////////////////////////////////////
 	printOutput(false, NULL, "\n----- Test: addRange overflow / addRangeオーバーフロー -----");
 	try {
 		std::vector<int> tooManyNumbers;
@@ -447,7 +447,7 @@ void test_insufficientElements() {	printOutput(false, GREEN_COLOR, "\n=== 5: Tes
 
 	printOutput(false, NULL, "=== 5: 要素不足例外テスト ===");
 
-	// empty span の shortestSpan テスト
+	// empty span の shortestSpan テスト //////////////////////////////////////
 	printOutput(false, NULL, "\n----- Test: Empty span shortestSpan / 空のSpan shortestSpan -----");
 	try {
 		printOutput(false, GREEN_COLOR, "Calling: Span emptySpan(5)");
@@ -459,7 +459,7 @@ void test_insufficientElements() {	printOutput(false, GREEN_COLOR, "\n=== 5: Tes
 		std::cout << "✅ Passed: Empty span exception (shortest): " << e.what() << std::endl;
 	}
 
-	// empty span の longestSpan テスト
+	// empty span の longestSpan テスト //////////////////////////////////////
 	printOutput(false, NULL, "\n----- Test: Empty span longestSpan / 空のSpan longestSpan -----");
 	try {
 		printOutput(false, GREEN_COLOR, "Calling: Span emptySpan(5)");
@@ -471,7 +471,7 @@ void test_insufficientElements() {	printOutput(false, GREEN_COLOR, "\n=== 5: Tes
 		std::cout << "✅ Passed: Empty span exception (longest): " << e.what() << std::endl;
 	}
 
-	// single element span の shortestSpan テスト
+	// single element span の shortestSpan テスト //////////////////////////////////////
 	printOutput(false, NULL, "\n----- Test: Single element span shortestSpan / 単一要素Span shortestSpan -----");
 	try {
 		printOutput(false, GREEN_COLOR, "Calling: Span singleSpan(5)");
@@ -485,7 +485,7 @@ void test_insufficientElements() {	printOutput(false, GREEN_COLOR, "\n=== 5: Tes
 		std::cout << "✅ Passed: Single element span exception (shortest): " << e.what() << std::endl;
 	}
 
-	// single element span の longestSpan テスト
+	// single element span の longestSpan テスト  //////////////////////////////////////
 	printOutput(false, NULL, "\n----- Test: Single element span longestSpan / 単一要素Span longestSpan -----");
 	try {
 		printOutput(false, GREEN_COLOR, "Calling: Span singleSpan(5)");
