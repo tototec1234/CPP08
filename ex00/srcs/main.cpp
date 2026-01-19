@@ -6,7 +6,7 @@
 /*   By: toruinoue <toruinoue@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 22:00:00 by torinoue          #+#    #+#             */
-/*   Updated: 2026/01/19 11:02:14 by toruinoue        ###   ########.fr       */
+/*   Updated: 2026/01/19 11:35:07 by toruinoue        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 // # include <set>
 
 void printOutput(bool useError, const char* color, const std::string& message, bool newline = true);
+template <typename T>
+void printContainerContents(const T& container, const std::string& label);
 void test_vector();
 void test_list();
 void test_deque();
@@ -94,8 +96,11 @@ void test_vector() {
 		vec.push_back(4);
 		vec.push_back(5);
 
+		printContainerContents(vec, "Vector contains");
+
 		// 成功ケース
 		printOutput(false, nullptr, "\n--- Test 1: Finding existing value (3) / 既存の値の検索（3） ---");
+		printOutput(false, GREEN_COLOR, "Calling: easyfind(vec, 3)");
 		try {
 			std::vector<int>::iterator result_it = easyfind(vec, 3);
 			long index = std::distance(vec.begin(), result_it);
@@ -107,6 +112,7 @@ void test_vector() {
 
 		// 失敗ケース
 		printOutput(false, nullptr, "\n--- Test 2: Finding non-existing value (42) / 存在しない値の検索（42） ---");
+		printOutput(false, GREEN_COLOR, "Calling: easyfind(vec, 42) - Expected to throw exception");
 		try {
 			std::vector<int>::iterator result_it = easyfind(vec, 42);
 			long index = std::distance(vec.begin(), result_it);
@@ -130,8 +136,11 @@ void test_list() {
 		lst.push_back(20);
 		lst.push_back(30);
 
+		printContainerContents(lst, "List contains");
+
 		// 成功ケース
 		printOutput(false, nullptr, "\n--- Test 1: Finding existing value (20) / 既存の値の検索（20） ---");
+		printOutput(false, GREEN_COLOR, "Calling: easyfind(lst, 20)");
 		try {
 			std::list<int>::iterator result = easyfind(lst, 20);
 			long index = std::distance(lst.begin(), result);
@@ -143,6 +152,7 @@ void test_list() {
 
 		// 失敗ケース
 		printOutput(false, nullptr, "\n--- Test 2: Finding non-existing value (42) / 存在しない値の検索（42） ---");
+		printOutput(false, GREEN_COLOR, "Calling: easyfind(lst, 42) - Expected to throw exception");
 		try {
 			std::list<int>::iterator result = easyfind(lst, 42);
 			std::cout << "Found: " << *result << std::endl;
@@ -165,8 +175,11 @@ void test_deque() {
 		deq.push_back(200);
 		deq.push_back(300);
 
+		printContainerContents(deq, "Deque contains");
+
 		// 成功ケース
 		printOutput(false, nullptr, "\n--- Test 1: Finding existing value (200) / 既存の値の検索（200） ---");
+		printOutput(false, GREEN_COLOR, "Calling: easyfind(deq, 200)");
 		try {
 			std::deque<int>::iterator result = easyfind(deq, 200);
 			long index = std::distance(deq.begin(), result);
@@ -178,6 +191,7 @@ void test_deque() {
 
 		// 失敗ケース
 		printOutput(false, nullptr, "\n--- Test 2: Finding non-existing value (42) / 存在しない値の検索（42） ---");
+		printOutput(false, GREEN_COLOR, "Calling: easyfind(deq, 42) - Expected to throw exception");
 		try {
 			std::deque<int>::iterator result = easyfind(deq, 42);
 			std::cout << "Found: " << *result << std::endl;
@@ -188,6 +202,23 @@ void test_deque() {
 	} catch (const std::exception &e) {
 		printOutput(false, nullptr, std::string("❌ Failed: ") + e.what());
 	}
+}
+/* ************************************************************************** */	
+// テンプレート関数として実装: std::listは[]演算子（Random Access）をサポートしていないため、
+// すべてのコンテナタイプ（vector, list, deque）で共通して使用できるイテレータベースの実装が必要
+template <typename T>
+void printContainerContents(const T& container, const std::string& label) {
+	std::cout << label << ": ";
+	typename T::const_iterator it = container.begin();
+	typename T::const_iterator end = container.end();
+	for (; it != end; ++it) {
+		std::cout << *it;
+		typename T::const_iterator next = it;
+		++next;
+		if (next != end)
+			std::cout << " ";
+	}
+	std::cout << std::endl;
 }
 /* ************************************************************************** */	
 void printOutput(bool useError, const char* color, const std::string& message, bool newline) {
